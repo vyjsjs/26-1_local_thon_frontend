@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <!-- 공방거리 메인 마스코트 - 입구 토템용 -->
+  <rect width="200" height="200" rx="20" fill="#FFF8F0"/>
+  <!-- 메인 캐릭터 (여러 마스코트의 조합 느낌) -->
+  <circle cx="100" cy="70" r="45" fill="#D4A574"/>
+  <!-- 왕관/모자 (공방거리의 상징) -->
+  <path d="M60,40 L75,15 L90,35 L100,10 L110,35 L125,15 L140,40 Z" fill="#E8B873"/>
+  <rect x="60" y="38" width="80" height="10" rx="2" fill="#D4A563"/>
+  <!-- 귀 -->
+  <ellipse cx="60" cy="55" rx="12" ry="20" fill="#D4A574"/>
+  <ellipse cx="140" cy="55" rx="12" ry="20" fill="#D4A574"/>
+  <!-- 눈 -->
+  <circle cx="80" cy="70" r="8" fill="#3A3A3A"/>
+  <circle cx="120" cy="70" r="8" fill="#3A3A3A"/>
+  <circle cx="82" cy="68" r="3" fill="#FFFFFF"/>
+  <circle cx="122" cy="68" r="3" fill="#FFFFFF"/>
+  <!-- 코 -->
+  <ellipse cx="100" cy="85" rx="8" ry="5" fill="#8B6B50"/>
+  <!-- 입 -->
+  <path d="M90,95 Q100,105 110,95" fill="none" stroke="#8B6B50" stroke-width="2" stroke-linecap="round"/>
+  <!-- 몸 -->
+  <ellipse cx="100" cy="150" rx="50" ry="40" fill="#D4A574"/>
+  <!-- 손에 들고 있는 공방 도구들 -->
+  <rect x="60" y="135" width="25" height="8" rx="2" fill="#8B9DC3"/> <!-- 붓 -->
+  <rect x="115" y="135" width="25" height="8" rx="2" fill="#A58B70"/> <!-- 나무 -->
+  <!-- 수원 공방거리 텍스트 -->
+  <text x="100" y="195" text-anchor="middle" font-size="12" font-weight="bold" fill="#8B6B50">공방거리</text>
+</svg>

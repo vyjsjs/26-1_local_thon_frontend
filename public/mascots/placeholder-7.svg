@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <!-- Placeholder mascot - 선물 상자를 들고 있는 강아지 실루엣 -->
+  <rect width="200" height="200" rx="20" fill="#FDF5E6"/>
+  <circle cx="100" cy="75" r="38" fill="#C4A882"/>
+  <!-- 귀 -->
+  <ellipse cx="65" cy="55" rx="18" ry="25" fill="#C4A882"/>
+  <ellipse cx="135" cy="55" rx="18" ry="25" fill="#C4A882"/>
+  <!-- 코 -->
+  <ellipse cx="100" cy="85" rx="12" ry="8" fill="#8B7355"/>
+  <!-- 몸 -->
+  <ellipse cx="100" cy="145" rx="40" ry="40" fill="#C4A882"/>
+  <!-- 선물 상자 (특색 아이템) -->
+  <rect x="75" y="115" width="50" height="40" rx="5" fill="#E57373"/>
+  <rect x="95" y="115" width="10" height="40" fill="#FFCDD2"/>
+  <rect x="75" y="130" width="50" height="10" fill="#FFCDD2"/>
+  <!-- 리본 -->
+  <circle cx="100" cy="115" r="8" fill="#FFCDD2"/>
+  <!-- 플레이스홀더 표시 -->
+  <text x="100" y="190" text-anchor="middle" font-size="10" fill="#8B6B50">기념품점</text>
+</svg>

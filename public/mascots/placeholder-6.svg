@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <!-- Placeholder mascot - 찻잔을 들고 있는 새 실루엣 -->
+  <rect width="200" height="200" rx="20" fill="#F5F0E8"/>
+  <ellipse cx="100" cy="90" rx="35" ry="30" fill="#7BA38F"/>
+  <!-- 머리 -->
+  <circle cx="100" cy="55" r="25" fill="#7BA38F"/>
+  <!-- 부리 -->
+  <polygon points="100,70 90,80 110,80" fill="#D4A574"/>
+  <!-- 날개 -->
+  <ellipse cx="60" cy="100" rx="20" ry="30" fill="#6B9080"/>
+  <ellipse cx="140" cy="100" rx="20" ry="30" fill="#6B9080"/>
+  <!-- 찻잔 (특색 아이템) -->
+  <ellipse cx="100" cy="145" rx="25" ry="10" fill="#E8D5C4"/>
+  <path d="M75,145 L80,165 L120,165 L125,145" fill="#E8D5C4"/>
+  <path d="M125,150 Q140,150 140,160 Q140,170 125,165" fill="none" stroke="#E8D5C4" stroke-width="4"/>
+  <!-- 플레이스홀더 표시 -->
+  <text x="100" y="190" text-anchor="middle" font-size="10" fill="#5A8070">전통 찻집</text>
+</svg>

@@ -1,0 +1,510 @@
+@import 'tailwindcss';
+@import 'tw-animate-css';
+
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  /* ========== DESIGN.md - Airbnb Design System ========== */
+  
+  /* Canvas & Surface */
+  --background: #ffffff;
+  --foreground: #222222;
+  --card: #ffffff;
+  --card-foreground: #222222;
+  --popover: #ffffff;
+  --popover-foreground: #222222;
+  
+  /* Primary: Rausch (#ff385c) - the single brand voltage */
+  --primary: #ff385c;
+  --primary-active: #e00b41;
+  --primary-disabled: #ffd1da;
+  --primary-foreground: #ffffff;
+  
+  /* Secondary: Surface soft */
+  --secondary: #f7f7f7;
+  --secondary-foreground: #222222;
+  
+  /* Muted: Neutral grays */
+  --muted: #f7f7f7;
+  --muted-foreground: #6a6a6a;
+  
+  /* Accent: Surface strong */
+  --accent: #f2f2f2;
+  --accent-foreground: #222222;
+  
+  /* Success: Teal for collected stamps */
+  --success: #00a699;
+  --success-foreground: #ffffff;
+  
+  /* Destructive: Error red */
+  --destructive: #c13515;
+  --destructive-foreground: #ffffff;
+  
+  /* Borders - Hairline colors */
+  --border: #dddddd;
+  --border-strong: #c1c1c1;
+  --hairline-soft: #ebebeb;
+  --input: #dddddd;
+  --ring: #ff385c;
+  
+  /* Text hierarchy from DESIGN.md */
+  --ink: #222222;
+  --body: #3f3f3f;
+  --muted-soft: #929292;
+  
+  /* Semantic */
+  --legal-link: #428bff;
+  --star-rating: #222222;
+  
+  /* Charts */
+  --chart-1: #ff385c;
+  --chart-2: #00a699;
+  --chart-3: #428bff;
+  --chart-4: #460479;
+  --chart-5: #92174d;
+  
+  /* Rounded corners from DESIGN.md */
+  --radius-none: 0px;
+  --radius-xs: 4px;
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-xl: 32px;
+  --radius-full: 9999px;
+  --radius: 8px;
+  
+  /* Spacing from DESIGN.md */
+  --spacing-xxs: 2px;
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 12px;
+  --spacing-base: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+  --spacing-xxl: 48px;
+  --spacing-section: 64px;
+  
+  /* Sidebar */
+  --sidebar: #ffffff;
+  --sidebar-foreground: #222222;
+  --sidebar-primary: #ff385c;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #f7f7f7;
+  --sidebar-accent-foreground: #222222;
+  --sidebar-border: #dddddd;
+  --sidebar-ring: #ff385c;
+}
+
+.dark {
+  --background: #1a1a1a;
+  --foreground: #f7f7f7;
+  --card: #222222;
+  --card-foreground: #f7f7f7;
+  --popover: #222222;
+  --popover-foreground: #f7f7f7;
+  --primary: #ff5a78;
+  --primary-active: #ff7a94;
+  --primary-foreground: #ffffff;
+  --secondary: #2a2a2a;
+  --secondary-foreground: #f7f7f7;
+  --muted: #2a2a2a;
+  --muted-foreground: #929292;
+  --accent: #333333;
+  --accent-foreground: #f7f7f7;
+  --success: #00c4b4;
+  --success-foreground: #ffffff;
+  --destructive: #ff6b6b;
+  --destructive-foreground: #ffffff;
+  --border: #3a3a3a;
+  --input: #3a3a3a;
+  --ring: #ff5a78;
+}
+
+@theme inline {
+  /* Typography from DESIGN.md - Inter as substitute for Airbnb Cereal VF */
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
+  
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-success: var(--success);
+  --color-success-foreground: var(--success-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --radius-sm: var(--radius-sm);
+  --radius-md: var(--radius-md);
+  --radius-lg: var(--radius-lg);
+  --radius-xl: var(--radius-xl);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-feature-settings: "kern" 1, "liga" 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+/* ========== Typography from DESIGN.md ========== */
+
+/* Display XL: 28px/700 - Homepage h1 */
+.text-display-xl {
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1.43;
+  letter-spacing: 0;
+}
+
+/* Display LG: 22px/500 - Listing h1 */
+.text-display-lg {
+  font-size: 22px;
+  font-weight: 500;
+  line-height: 1.18;
+  letter-spacing: -0.44px;
+}
+
+/* Display MD: 21px/700 - Section heads */
+.text-display-md {
+  font-size: 21px;
+  font-weight: 700;
+  line-height: 1.43;
+}
+
+/* Display SM: 20px/600 - Sub-section titles */
+.text-display-sm {
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 1.20;
+  letter-spacing: -0.18px;
+}
+
+/* Title MD: 16px/600 */
+.text-title-md {
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+/* Title SM: 16px/500 */
+.text-title-sm {
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.25;
+}
+
+/* Body MD: 16px/400 */
+.text-body-md {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+/* Body SM: 14px/400 */
+.text-body-sm {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.43;
+}
+
+/* Caption: 14px/500 */
+.text-caption {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.29;
+}
+
+/* Caption SM: 13px/400 */
+.text-caption-sm {
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1.23;
+}
+
+/* Badge: 11px/600 */
+.text-badge {
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1.18;
+}
+
+/* Micro Label: 12px/700 */
+.text-micro-label {
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.33;
+}
+
+/* ========== Custom Animations ========== */
+
+@keyframes stamp-collect {
+  0% { transform: scale(1); }
+  30% { transform: scale(1.15); }
+  60% { transform: scale(0.95); }
+  100% { transform: scale(1); }
+}
+
+@keyframes stamp-glow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(255, 56, 92, 0); }
+  50% { box-shadow: 0 0 20px 4px rgba(255, 56, 92, 0.25); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-6px); }
+}
+
+@keyframes marker-pulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.06); opacity: 0.9; }
+}
+
+@keyframes fade-in-up {
+  0% { opacity: 0; transform: translateY(12px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slide-up {
+  0% { opacity: 0; transform: translateY(100%); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes confetti-fall {
+  0% { transform: translateY(-100vh) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+}
+
+@keyframes bounce-in {
+  0% { transform: scale(0); opacity: 0; }
+  50% { transform: scale(1.08); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes progress-shine {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(200%); }
+}
+
+.animate-stamp-collect {
+  animation: stamp-collect 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.animate-stamp-glow {
+  animation: stamp-glow 2s ease-in-out infinite;
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+.animate-marker-pulse {
+  animation: marker-pulse 2s ease-in-out infinite;
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.4s ease-out forwards;
+}
+
+.animate-slide-up {
+  animation: slide-up 0.3s ease-out;
+}
+
+.animate-bounce-in {
+  animation: bounce-in 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+/* ========== Component Styles from DESIGN.md ========== */
+
+/* Button Primary: 48px height, 8px radius */
+.btn-primary {
+  background-color: var(--primary);
+  color: var(--primary-foreground);
+  border-radius: var(--radius-sm);
+  padding: 14px 24px;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.25;
+  height: 48px;
+  transition: background-color 0.15s ease;
+}
+
+.btn-primary:hover {
+  background-color: var(--primary-active);
+}
+
+.btn-primary:disabled {
+  background-color: var(--primary-disabled);
+  cursor: not-allowed;
+}
+
+/* Button Secondary: 48px height, 8px radius, 1px border */
+.btn-secondary {
+  background-color: var(--card);
+  color: var(--foreground);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 13px 23px;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.25;
+  height: 48px;
+  transition: background-color 0.15s ease;
+}
+
+.btn-secondary:hover {
+  background-color: var(--secondary);
+}
+
+/* Button Pill: Full rounded */
+.btn-pill {
+  border-radius: var(--radius-full);
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+/* Card: 14px radius from DESIGN.md property-card */
+.card-base {
+  background-color: var(--card);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border);
+}
+
+/* Card Interactive: Hover shadow from DESIGN.md */
+.card-interactive {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card-interactive:hover {
+  transform: translateY(-2px);
+  box-shadow: rgba(0,0,0,0.02) 0 0 0 1px, rgba(0,0,0,0.04) 0 2px 6px, rgba(0,0,0,0.08) 0 4px 8px;
+}
+
+.card-interactive:active {
+  transform: translateY(0);
+}
+
+/* Glass header */
+.glass {
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.dark .glass {
+  background: rgba(34, 34, 34, 0.92);
+}
+
+/* ========== Stamp States ========== */
+
+.stamp-collected {
+  filter: none;
+  opacity: 1;
+}
+
+.stamp-uncollected {
+  filter: grayscale(100%);
+  opacity: 0.4;
+}
+
+/* Progress bar shine */
+.progress-shine::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.4),
+    transparent
+  );
+  animation: progress-shine 2s ease-in-out infinite;
+}
+
+/* ========== Mobile Utilities ========== */
+
+.h-safe-bottom {
+  height: env(safe-area-inset-bottom, 0px);
+}
+
+.pb-safe {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+.active\:scale-98:active {
+  transform: scale(0.98);
+}
+
+.active\:scale-95:active {
+  transform: scale(0.95);
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* ========== Badge Styles ========== */
+
+.badge-collected {
+  background-color: rgba(255, 56, 92, 0.1);
+  color: var(--primary);
+}
+
+.badge-not-collected {
+  background-color: var(--secondary);
+  color: var(--muted-foreground);
+}
+
+/* Guest favorite badge from DESIGN.md */
+.badge-favorite {
+  background-color: var(--card);
+  color: var(--foreground);
+  font-size: 11px;
+  font-weight: 600;
+  border-radius: var(--radius-full);
+  padding: 4px 10px;
+}

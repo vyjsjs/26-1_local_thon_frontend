@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <!-- Placeholder mascot - 염색 천을 들고 있는 여우 실루엣 -->
+  <rect width="200" height="200" rx="20" fill="#E8ECF0"/>
+  <circle cx="100" cy="80" r="38" fill="#D4885A"/>
+  <!-- 귀 -->
+  <polygon points="65,60 55,15 85,45" fill="#D4885A"/>
+  <polygon points="135,60 145,15 115,45" fill="#D4885A"/>
+  <polygon points="68,55 60,25 80,48" fill="#F0E8DC"/>
+  <polygon points="132,55 140,25 120,48" fill="#F0E8DC"/>
+  <!-- 몸 -->
+  <ellipse cx="100" cy="145" rx="35" ry="40" fill="#D4885A"/>
+  <!-- 염색 천 (특색 아이템) -->
+  <rect x="60" y="110" width="80" height="50" rx="5" fill="#4A7C9B"/>
+  <rect x="65" y="115" width="70" height="40" rx="3" fill="#6B9DB5"/>
+  <!-- 플레이스홀더 표시 -->
+  <text x="100" y="190" text-anchor="middle" font-size="10" fill="#3A6080">천연염색 공방</text>
+</svg>

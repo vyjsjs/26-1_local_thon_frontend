@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <!-- Placeholder mascot - 톱을 들고 있는 곰 실루엣 -->
+  <rect width="200" height="200" rx="20" fill="#F0E8DC"/>
+  <circle cx="100" cy="80" r="40" fill="#8B7355"/>
+  <!-- 귀 -->
+  <circle cx="65" cy="50" r="15" fill="#8B7355"/>
+  <circle cx="135" cy="50" r="15" fill="#8B7355"/>
+  <circle cx="65" cy="50" r="8" fill="#A58B70"/>
+  <circle cx="135" cy="50" r="8" fill="#A58B70"/>
+  <!-- 몸 -->
+  <ellipse cx="100" cy="145" rx="45" ry="45" fill="#8B7355"/>
+  <!-- 나무판 (특색 아이템) -->
+  <rect x="55" y="120" width="90" height="15" rx="3" fill="#C4A67C"/>
+  <line x1="60" y1="127" x2="140" y2="127" stroke="#A58B70" stroke-width="1"/>
+  <!-- 플레이스홀더 표시 -->
+  <text x="100" y="190" text-anchor="middle" font-size="10" fill="#5C4A3A">목공예 공방</text>
+</svg>

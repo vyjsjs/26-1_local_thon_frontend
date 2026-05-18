@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <!-- Placeholder mascot - 한복을 입은 고양이 실루엣 -->
+  <rect width="200" height="200" rx="20" fill="#E8F0E8"/>
+  <circle cx="100" cy="75" r="40" fill="#A8B89A"/>
+  <!-- 귀 -->
+  <polygon points="65,55 75,20 90,50" fill="#A8B89A"/>
+  <polygon points="135,55 125,20 110,50" fill="#A8B89A"/>
+  <polygon points="70,50 78,30 85,48" fill="#C8D8C0"/>
+  <polygon points="130,50 122,30 115,48" fill="#C8D8C0"/>
+  <!-- 한복 저고리 -->
+  <path d="M60,100 Q100,90 140,100 L150,170 Q100,180 50,170 Z" fill="#D4A5A5"/>
+  <!-- 치마 고름 -->
+  <rect x="95" y="105" width="10" height="30" fill="#E8C8C8"/>
+  <!-- 플레이스홀더 표시 -->
+  <text x="100" y="190" text-anchor="middle" font-size="10" fill="#6B8B6B">한복 공방</text>
+</svg>

@@ -33,11 +33,11 @@ export function HomeContent() {
   }, [])
 
   // 개발자용: 랜덤 스탬프 획득 후 성공 화면으로 이동
-  const handleDevStampTest = useCallback(() => {
+  const handleDevStampTest = useCallback(async () => {
     const uncollectedShops = SHOPS.filter(shop => !stamps[shop.id]?.isCollected)
     if (uncollectedShops.length > 0) {
       const randomShop = uncollectedShops[Math.floor(Math.random() * uncollectedShops.length)]
-      collect(randomShop.id)
+      await collect(randomShop.id)
       router.push(`/stamp-success?shop=${randomShop.id}`)
     } else {
       // 모든 스탬프를 이미 수집한 경우 첫 번째 가게로 이동
@@ -45,14 +45,14 @@ export function HomeContent() {
     }
   }, [stamps, collect, router])
 
-  const handleNfcTag = useCallback((nfcId: string) => {
+  const handleNfcTag = useCallback(async (nfcId: string) => {
     if (nfcId === 'nfc-entrance') {
       return
     }
 
     const shop = getShopByNfcId(nfcId)
     if (shop) {
-      const success = collect(shop.id)
+      const success = await collect(shop.id)
       if (success) {
         router.push(`/stamp-success?shop=${shop.id}`)
       } else {

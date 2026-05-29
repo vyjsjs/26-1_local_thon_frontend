@@ -31,7 +31,7 @@ function ShopContent({ id }: { id: string }) {
 
   const shop = SHOPS.find(s => s.id === id)
 
-  const handleNfcTag = useCallback((nfcId: string) => {
+  const handleNfcTag = useCallback(async (nfcId: string) => {
     if (nfcId === 'nfc-entrance') {
       router.push('/')
       return
@@ -39,7 +39,7 @@ function ShopContent({ id }: { id: string }) {
 
     const taggedShop = getShopByNfcId(nfcId)
     if (taggedShop) {
-      const success = collect(taggedShop.id)
+      const success = await collect(taggedShop.id)
       if (success) {
         setCollectedShop({ 
           name: lang === 'en' ? taggedShop.nameEn : taggedShop.name, 

@@ -425,65 +425,6 @@ export function getUserId(): string {
   return userId
 }
 
-// 스탬프 저장/불러오기
-export function getStamps(): Record<string, Stamp> {
-  if (typeof window === 'undefined') return {}
-  
-  const stamps = localStorage.getItem('gongbang-stamps')
-  if (!stamps) {
-    const initialStamps: Record<string, Stamp> = {}
-    SHOPS.forEach(shop => {
-      initialStamps[shop.id] = {
-        shopId: shop.id,
-        collectedAt: null,
-        isCollected: false,
-      }
-    })
-    localStorage.setItem('gongbang-stamps', JSON.stringify(initialStamps))
-    return initialStamps
-  }
-  
-  // 기존 데이터에 새 가게가 없으면 추가
-  const parsed = JSON.parse(stamps)
-  let updated = false
-  SHOPS.forEach(shop => {
-    if (!parsed[shop.id]) {
-      parsed[shop.id] = {
-        shopId: shop.id,
-        collectedAt: null,
-        isCollected: false,
-      }
-      updated = true
-    }
-  })
-  if (updated) {
-    localStorage.setItem('gongbang-stamps', JSON.stringify(parsed))
-  }
-  
-  return parsed
-}
-
-export function collectStamp(shopId: string): Stamp | null {
-  if (typeof window === 'undefined') return null
-  
-  const stamps = getStamps()
-  if (stamps[shopId]) {
-    stamps[shopId] = {
-      ...stamps[shopId],
-      collectedAt: new Date(),
-      isCollected: true,
-    }
-    localStorage.setItem('gongbang-stamps', JSON.stringify(stamps))
-    return stamps[shopId]
-  }
-  return null
-}
-
-export function getCollectedCount(): number {
-  const stamps = getStamps()
-  return Object.values(stamps).filter(s => s.isCollected).length
-}
-
 export function getShopByNfcId(nfcId: string): Shop | null {
   return SHOPS.find(shop => shop.nfcId === nfcId) || null
 }

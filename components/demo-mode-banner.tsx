@@ -1,5 +1,6 @@
 'use client'
 
+import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useDemoMode } from '@/lib/demo-mode'
 import { useI18n } from '@/lib/i18n'
@@ -20,9 +21,14 @@ export function DemoModeBanner() {
   }
 
   return (
-    <div className="fixed top-3 left-1/2 -translate-x-1/2 z-[70] flex items-center gap-1.5 pl-3 pr-1.5 py-1.5 rounded-full bg-primary text-primary-foreground shadow-lg">
-      <Sparkles className="w-3.5 h-3.5" />
-      <span className="text-badge font-medium whitespace-nowrap">{t('demo.active')}</span>
+    <div className="fixed top-3 left-1/2 -translate-x-1/2 z-[70] flex items-center gap-1.5 pl-1.5 pr-1.5 py-1.5 rounded-full bg-primary text-primary-foreground shadow-lg">
+      <Link
+        href="/demo"
+        className="flex items-center gap-1.5 pl-1.5 pr-2 py-0.5 rounded-full hover:bg-primary-foreground/20 transition-colors"
+      >
+        <Sparkles className="w-3.5 h-3.5" />
+        <span className="text-badge font-medium whitespace-nowrap">{t('demo.active')}</span>
+      </Link>
       <button
         onClick={handleExit}
         className="flex items-center gap-1 ml-1 pl-2 pr-2.5 py-1 rounded-full bg-primary-foreground/20 hover:bg-primary-foreground/30 transition-colors"

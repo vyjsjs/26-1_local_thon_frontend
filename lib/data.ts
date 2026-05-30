@@ -437,14 +437,9 @@ export function getDemoUserId(): string {
   return userId
 }
 
-// 데모 스탬프 초기화 — 새 ID 발급
-export function resetDemoUserId(): string {
-  if (typeof window === 'undefined') return 'demo-ssr'
-
-  const newId = `demo-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`
-  localStorage.setItem('gongbang-demo-user-id', newId)
-  return newId
-}
+// 데모 스탬프 초기화는 Supabase 에서 실제 삭제로 처리한다.
+// → useStamps(demoUserId).reset() (DELETE /api/stamps/{demoUserId})
+// 같은 demo- user_id 를 유지하므로 별도 ID 재발급은 하지 않는다.
 
 export function getShopByNfcId(nfcId: string): Shop | null {
   return SHOPS.find(shop => shop.nfcId === nfcId) || null

@@ -2,7 +2,9 @@ import type { Metadata, Viewport } from 'next'
 import { Geist, Geist_Mono } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import { BottomNav } from '@/components/bottom-nav'
+import { DemoModeBanner } from '@/components/demo-mode-banner'
 import { I18nProvider } from '@/lib/i18n'
+import { DemoModeProvider } from '@/lib/demo-mode'
 import './globals.css'
 
 const _geist = Geist({ subsets: ["latin"] });
@@ -54,10 +56,13 @@ export default function RootLayout({
     <html lang="ko" className="bg-background" data-scroll-behavior="smooth">
       <body className="font-sans antialiased min-h-screen pb-20">
         <I18nProvider>
-          <main className="max-w-md mx-auto">
-            {children}
-          </main>
-          <BottomNav />
+          <DemoModeProvider>
+            <main className="max-w-md mx-auto">
+              {children}
+            </main>
+            <DemoModeBanner />
+            <BottomNav />
+          </DemoModeProvider>
         </I18nProvider>
         {process.env.NODE_ENV === 'production' && <Analytics />}
       </body>

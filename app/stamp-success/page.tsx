@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { useStamps } from '@/hooks/use-stamps'
+import { useDemoMode } from '@/lib/demo-mode'
 import { useI18n } from '@/lib/i18n'
 import { SHOPS, getDemoUserId } from '@/lib/data'
 import { Button } from '@/components/ui/button'
@@ -13,14 +14,21 @@ import { Suspense } from 'react'
 
 function StampSuccessContent() {
   const searchParams = useSearchParams()
-  const isDemoMode = searchParams.get('from') === 'demo'
-  const demoUserId = isDemoMode ? getDemoUserId() : undefined
+  const { isDemoMode, enterDemoMode } = useDemoMode()
+  const fromDemo = searchParams.get('from') === 'demo'
+  const demoActive = isDemoMode || fromDemo
+  const demoUserId = demoActive ? getDemoUserId() : undefined
   const { collectedCount, totalCount } = useStamps(demoUserId)
   const { lang, t } = useI18n()
   const [showConfetti, setShowConfetti] = useState(true)
-  
+
   const shopId = searchParams.get('shop')
   const shop = SHOPS.find(s => s.id === shopId)
+
+  // 데모에서 넘어온 경우(직접 URL 접속 포함) 전역 데모 모드 유지
+  useEffect(() => {
+    if (fromDemo) enterDemoMode()
+  }, [fromDemo, enterDemoMode])
 
   useEffect(() => {
     const timer = setTimeout(() => setShowConfetti(false), 3000)
@@ -116,7 +124,7 @@ function StampSuccessContent() {
 
         {/* 버튼들 */}
         <div className="w-full max-w-xs space-y-3 animate-fade-in-up" style={{ animationDelay: '0.5s' }}>
-          {isDemoMode ? (
+          {demoActive ? (
             <>
               <Button
                 asChild
@@ -152,7 +160,7 @@ function StampSuccessContent() {
         </div>
 
         {/* 로그인 유도 (데모 모드에서는 숨김) */}
-        {!isDemoMode && (
+        {!demoActive && (
           <div className="mt-8 animate-fade-in-up" style={{ animationDelay: '0.6s' }}>
             <Link
               href="/login"

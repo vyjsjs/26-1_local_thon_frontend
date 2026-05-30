@@ -166,6 +166,8 @@ const translations: Record<Language, Record<string, string>> = {
     'demo.enterDemo': '데모 모드 시작',
     'demo.backToDemo': '데모로 돌아가기',
     'demo.progress': '데모 진행',
+    'demo.active': '데모 모드',
+    'demo.exit': '종료',
 
     // 로그인
     'login.title': '로그인',
@@ -333,6 +335,8 @@ const translations: Record<Language, Record<string, string>> = {
     'demo.enterDemo': 'Start Demo Mode',
     'demo.backToDemo': 'Back to Demo',
     'demo.progress': 'Demo Progress',
+    'demo.active': 'Demo Mode',
+    'demo.exit': 'Exit',
 
     // 로그인
     'login.title': 'Login',

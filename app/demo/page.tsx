@@ -1,11 +1,12 @@
 'use client'
 
-import { useState, useCallback, Suspense } from 'react'
+import { useState, useCallback, useEffect, Suspense } from 'react'
 import { useRouter } from 'next/navigation'
 import Image from 'next/image'
 import Link from 'next/link'
-import { SHOPS, getDemoUserId, resetDemoUserId, type Shop } from '@/lib/data'
+import { SHOPS, getDemoUserId, type Shop } from '@/lib/data'
 import { useStamps } from '@/hooks/use-stamps'
+import { useDemoMode } from '@/lib/demo-mode'
 import { useI18n } from '@/lib/i18n'
 import { StampProgress } from '@/components/stamp-grid'
 import { LanguageToggle } from '@/components/language-toggle'
@@ -16,10 +17,17 @@ import { Button } from '@/components/ui/button'
 function DemoContent() {
   const router = useRouter()
   const { lang, t } = useI18n()
-  const [demoUserId, setDemoUserId] = useState(() => getDemoUserId())
-  const { stamps, collect, collectedCount, totalCount, isLoading } = useStamps(demoUserId)
+  const { enterDemoMode } = useDemoMode()
+  const [demoUserId] = useState(() => getDemoUserId())
+  const { stamps, collect, reset, collectedCount, totalCount, isLoading } = useStamps(demoUserId)
   const [tappingShop, setTappingShop] = useState<Shop | null>(null)
   const [showResetConfirm, setShowResetConfirm] = useState(false)
+  const [isResetting, setIsResetting] = useState(false)
+
+  // 데모 페이지에 들어오면 전역 데모 모드 ON → 이후 모든 페이지 이동에 데모 유지
+  useEffect(() => {
+    enterDemoMode()
+  }, [enterDemoMode])
 
   const handleShopTap = useCallback(async (shop: Shop) => {
     if (tappingShop) return
@@ -30,11 +38,12 @@ function DemoContent() {
     router.push(`/stamp-success?shop=${shop.id}&from=demo`)
   }, [tappingShop, collect, router])
 
-  const handleReset = useCallback(() => {
-    const newId = resetDemoUserId()
-    setDemoUserId(newId)
+  const handleReset = useCallback(async () => {
+    setIsResetting(true)
+    await reset()
+    setIsResetting(false)
     setShowResetConfirm(false)
-  }, [])
+  }, [reset])
 
   return (
     <div className="min-h-screen pb-8 bg-background">
@@ -198,14 +207,16 @@ function DemoContent() {
                 variant="outline"
                 className="flex-1 h-11 rounded-[8px]"
                 onClick={() => setShowResetConfirm(false)}
+                disabled={isResetting}
               >
                 취소
               </Button>
               <Button
                 className="flex-1 h-11 rounded-[8px] bg-destructive hover:bg-destructive/90"
                 onClick={handleReset}
+                disabled={isResetting}
               >
-                {t('demo.reset')}
+                {isResetting ? '초기화 중...' : t('demo.reset')}
               </Button>
             </div>
           </div>

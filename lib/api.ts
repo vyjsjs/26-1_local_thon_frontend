@@ -21,6 +21,12 @@ export interface StampListResult {
   total_count: number
 }
 
+export interface StampResetResult {
+  success: boolean
+  user_id: string
+  deleted_count: number
+}
+
 // 신규 사용자 등록 (멱등). 실패해도 치명적이지 않으므로 호출부에서 무시 가능.
 export async function registerUser(userId: string): Promise<void> {
   const res = await fetch(`${API_BASE}/api/users/register`, {
@@ -48,5 +54,14 @@ export async function fetchStamps(userId: string): Promise<StampListResult> {
     method: 'GET',
   })
   if (!res.ok) throw new Error(`스탬프 조회 실패: ${res.status}`)
+  return res.json()
+}
+
+// 사용자 스탬프 전체 초기화 (데모 모드 전용 — 백엔드는 demo- prefix 만 허용)
+export async function resetStampsApi(userId: string): Promise<StampResetResult> {
+  const res = await fetch(`${API_BASE}/api/stamps/${encodeURIComponent(userId)}`, {
+    method: 'DELETE',
+  })
+  if (!res.ok) throw new Error(`스탬프 초기화 실패: ${res.status}`)
   return res.json()
 }

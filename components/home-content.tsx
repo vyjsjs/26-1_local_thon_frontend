@@ -7,43 +7,29 @@ import Image from 'next/image'
 import { useStamps } from '@/hooks/use-stamps'
 import { useI18n } from '@/lib/i18n'
 import { StampGrid, StampProgress } from '@/components/stamp-grid'
-import { NfcSimulator } from '@/components/nfc-simulator'
 import { LanguageToggle } from '@/components/language-toggle'
 import { SHOPS, getShopByNfcId } from '@/lib/data'
-import { ChevronRight, MapPin, Sparkles, Zap } from 'lucide-react'
+import { ChevronRight, MapPin, Sparkles } from 'lucide-react'
 
 export function HomeContent() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const { stamps, collect, collectedCount, totalCount, isLoading } = useStamps()
   const { lang, t } = useI18n()
-  const [devClickCount, setDevClickCount] = useState(0)
-  const [showDevButton, setShowDevButton] = useState(false)
+  const [demoTapCount, setDemoTapCount] = useState(0)
+  const [showDemoButton, setShowDemoButton] = useState(false)
 
-  // 개발자 모드 활성화 (헤더 아이콘 5번 클릭)
-  const handleDevTap = useCallback(() => {
-    setDevClickCount(prev => {
-      const newCount = prev + 1
-      if (newCount >= 5) {
-        setShowDevButton(true)
+  // 로고 5번 탭 → 데모 모드 진입 버튼 노출
+  const handleLogoTap = useCallback(() => {
+    setDemoTapCount(prev => {
+      const next = prev + 1
+      if (next >= 5) {
+        setShowDemoButton(true)
         return 0
       }
-      return newCount
+      return next
     })
   }, [])
-
-  // 개발자용: 랜덤 스탬프 획득 후 성공 화면으로 이동
-  const handleDevStampTest = useCallback(async () => {
-    const uncollectedShops = SHOPS.filter(shop => !stamps[shop.id]?.isCollected)
-    if (uncollectedShops.length > 0) {
-      const randomShop = uncollectedShops[Math.floor(Math.random() * uncollectedShops.length)]
-      await collect(randomShop.id)
-      router.push(`/stamp-success?shop=${randomShop.id}`)
-    } else {
-      // 모든 스탬프를 이미 수집한 경우 첫 번째 가게로 이동
-      router.push(`/stamp-success?shop=${SHOPS[0].id}`)
-    }
-  }, [stamps, collect, router])
 
   const handleNfcTag = useCallback(async (nfcId: string) => {
     if (nfcId === 'nfc-entrance') {
@@ -85,8 +71,8 @@ export function HomeContent() {
       {/* 헤더 */}
       <header className="sticky top-0 z-30 glass border-b border-border">
         <div className="px-4 py-3 flex items-center justify-between">
-          <button 
-            onClick={handleDevTap}
+          <button
+            onClick={handleLogoTap}
             className="flex items-center gap-2"
           >
             <div className="w-8 h-8 rounded-[8px] bg-primary flex items-center justify-center">
@@ -95,16 +81,14 @@ export function HomeContent() {
             <span className="text-title-md text-foreground">{t('home.title')}</span>
           </button>
           <div className="flex items-center gap-2">
-            {/* 개발자용 버튼 (숨겨진 활성화) */}
-            {showDevButton && (
-              <button
-                onClick={handleDevStampTest}
-                className="flex items-center gap-1 px-2.5 py-1.5 rounded-full bg-chart-4/10 text-chart-4 text-badge hover:bg-chart-4/20 transition-colors"
-                title="Dev: Test Stamp Success"
+            {showDemoButton && (
+              <Link
+                href="/demo"
+                className="flex items-center gap-1 px-2.5 py-1.5 rounded-full bg-primary/10 text-primary text-badge hover:bg-primary/20 transition-colors"
               >
-                <Zap className="w-3 h-3" />
-                <span>DEV</span>
-              </button>
+                <Sparkles className="w-3 h-3" />
+                <span>{t('demo.badge')}</span>
+              </Link>
             )}
             <LanguageToggle compact />
             <Link 
@@ -281,7 +265,6 @@ export function HomeContent() {
         </section>
       </div>
 
-      <NfcSimulator onTag={handleNfcTag} />
     </div>
   )
 }

@@ -20,17 +20,18 @@ function buildStampMap(collected: { shopId: string; collectedAt: Date | null }[]
   return map
 }
 
-export function useStamps() {
+// overrideUserId: 데모 모드에서 전달. undefined이면 일반 사용자 ID 사용.
+export function useStamps(overrideUserId?: string) {
   const [stamps, setStamps] = useState<Record<string, Stamp>>(() => buildStampMap([]))
   const [isLoading, setIsLoading] = useState(true)
 
-  // 마운트 시 백엔드에서 현재 스탬프 현황 로드
   useEffect(() => {
     let cancelled = false
+    setIsLoading(true)
+    setStamps(buildStampMap([]))
 
     async function load() {
-      const userId = getUserId()
-      // 신규 사용자 등록 (멱등) — 조회를 막지 않도록 await 하지 않음
+      const userId = overrideUserId ?? getUserId()
       registerUser(userId).catch(() => {})
 
       try {
@@ -43,7 +44,6 @@ export function useStamps() {
           }))
         ))
       } catch (err) {
-        // 백엔드 연결 실패 시 전체 미수집 상태 유지 (앱이 죽지 않도록)
         console.error('[useStamps] 스탬프 조회 실패:', err)
       } finally {
         if (!cancelled) setIsLoading(false)
@@ -54,16 +54,13 @@ export function useStamps() {
     return () => {
       cancelled = true
     }
-  }, [])
+  }, [overrideUserId])
 
-  // shopId 로 스탬프 수집. 백엔드는 nfc_id 를 받으므로 'shop-1' → 'nfc-shop-1' 로 변환.
-  // 반환값: 이번에 새로 수집했으면 true, 이미 수집했거나 실패면 false.
   const collect = useCallback(async (shopId: string): Promise<boolean> => {
-    const userId = getUserId()
+    const userId = overrideUserId ?? getUserId()
     const nfcId = `nfc-${shopId}`
     try {
       const res = await collectStampApi(userId, nfcId)
-      // 신규/중복 모두 로컬 상태는 수집됨으로 갱신
       setStamps(prev => ({
         ...prev,
         [shopId]: { shopId, collectedAt: new Date(), isCollected: true },
@@ -73,7 +70,7 @@ export function useStamps() {
       console.error('[useStamps] 스탬프 수집 실패:', err)
       return false
     }
-  }, [])
+  }, [overrideUserId])
 
   const isCollected = useCallback((shopId: string) => {
     return stamps[shopId]?.isCollected ?? false

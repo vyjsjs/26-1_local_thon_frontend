@@ -155,6 +155,18 @@ const translations: Record<Language, Record<string, string>> = {
     'stampSuccess.continueTour': '투어 계속하기',
     'stampSuccess.progress': '진행률',
 
+    // 데모 모드
+    'demo.badge': '데모 모드',
+    'demo.subtitle': '공방을 탭하여 NFC 태깅을 시연해보세요',
+    'demo.reset': '리셋',
+    'demo.resetConfirm': '스탬프를 전부 초기화할까요?',
+    'demo.nfcTapping': 'NFC 태깅 중...',
+    'demo.tapToCollect': '탭하여 태깅',
+    'demo.alreadyCollected': '수집 완료',
+    'demo.enterDemo': '데모 모드 시작',
+    'demo.backToDemo': '데모로 돌아가기',
+    'demo.progress': '데모 진행',
+
     // 로그인
     'login.title': '로그인',
     'login.subtitle': '스탬프를 저장하고 관리하세요',
@@ -309,6 +321,18 @@ const translations: Record<Language, Record<string, string>> = {
     'stampSuccess.viewMyStamps': 'View My Stamps',
     'stampSuccess.continueTour': 'Continue Tour',
     'stampSuccess.progress': 'Progress',
+
+    // 데모 모드
+    'demo.badge': 'Demo Mode',
+    'demo.subtitle': 'Tap a workshop to simulate NFC tagging',
+    'demo.reset': 'Reset',
+    'demo.resetConfirm': 'Reset all demo stamps?',
+    'demo.nfcTapping': 'NFC Tapping...',
+    'demo.tapToCollect': 'Tap to Tag',
+    'demo.alreadyCollected': 'Collected',
+    'demo.enterDemo': 'Start Demo Mode',
+    'demo.backToDemo': 'Back to Demo',
+    'demo.progress': 'Demo Progress',
 
     // 로그인
     'login.title': 'Login',

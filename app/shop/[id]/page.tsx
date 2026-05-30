@@ -10,7 +10,6 @@ import { SHOPS, getShopByNfcId } from '@/lib/data'
 import { useStamps } from '@/hooks/use-stamps'
 import { useI18n } from '@/lib/i18n'
 import { TouchSuwonButton, NoExperienceNotice } from '@/components/touch-suwon-button'
-import { NfcSimulator, StampCollectedToast } from '@/components/nfc-simulator'
 import { LanguageToggle } from '@/components/language-toggle'
 import { cn } from '@/lib/utils'
 import { ChevronLeft, MapPin, Clock, Check, Sparkles, ShoppingBag } from 'lucide-react'
@@ -25,8 +24,6 @@ function ShopContent({ id }: { id: string }) {
   const { stamps, collect, isCollected } = useStamps()
   const { lang, t } = useI18n()
   
-  const [showCollectedToast, setShowCollectedToast] = useState(false)
-  const [collectedShop, setCollectedShop] = useState<{ name: string; image: string } | null>(null)
   const [justCollected, setJustCollected] = useState(false)
 
   const shop = SHOPS.find(s => s.id === id)
@@ -39,24 +36,11 @@ function ShopContent({ id }: { id: string }) {
 
     const taggedShop = getShopByNfcId(nfcId)
     if (taggedShop) {
-      const success = await collect(taggedShop.id)
-      if (success) {
-        setCollectedShop({ 
-          name: lang === 'en' ? taggedShop.nameEn : taggedShop.name, 
-          image: taggedShop.mascotImage 
-        })
-        setShowCollectedToast(true)
-        if (taggedShop.id === id) {
-          setJustCollected(true)
-        }
-      }
-      if (taggedShop.id !== id) {
-        setTimeout(() => {
-          router.push(`/shop/${taggedShop.id}`)
-        }, 500)
-      }
+      if (taggedShop.id === id) setJustCollected(true)
+      await collect(taggedShop.id)
+      router.push(`/stamp-success?shop=${taggedShop.id}`)
     }
-  }, [collect, router, id, lang])
+  }, [collect, router, id])
 
   useEffect(() => {
     const nfcId = searchParams.get('nfc')
@@ -302,16 +286,6 @@ function ShopContent({ id }: { id: string }) {
         </div>
       </div>
 
-      <NfcSimulator onTag={handleNfcTag} />
-
-      {collectedShop && (
-        <StampCollectedToast
-          shopName={collectedShop.name}
-          mascotImage={collectedShop.image}
-          isVisible={showCollectedToast}
-          onClose={() => setShowCollectedToast(false)}
-        />
-      )}
     </div>
   )
 }

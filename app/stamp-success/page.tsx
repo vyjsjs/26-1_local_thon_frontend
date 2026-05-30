@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { useStamps } from '@/hooks/use-stamps'
 import { useI18n } from '@/lib/i18n'
-import { SHOPS } from '@/lib/data'
+import { SHOPS, getDemoUserId } from '@/lib/data'
 import { Button } from '@/components/ui/button'
 import { Check, Sparkles, Trophy } from 'lucide-react'
 import Image from 'next/image'
@@ -13,7 +13,9 @@ import { Suspense } from 'react'
 
 function StampSuccessContent() {
   const searchParams = useSearchParams()
-  const { collectedCount, totalCount } = useStamps()
+  const isDemoMode = searchParams.get('from') === 'demo'
+  const demoUserId = isDemoMode ? getDemoUserId() : undefined
+  const { collectedCount, totalCount } = useStamps(demoUserId)
   const { lang, t } = useI18n()
   const [showConfetti, setShowConfetti] = useState(true)
   
@@ -114,30 +116,52 @@ function StampSuccessContent() {
 
         {/* 버튼들 */}
         <div className="w-full max-w-xs space-y-3 animate-fade-in-up" style={{ animationDelay: '0.5s' }}>
-          <Button 
-            asChild
-            className="w-full h-12 text-body-md font-medium rounded-[8px]"
-          >
-            <Link href="/stamps">{t('stampSuccess.viewMyStamps')}</Link>
-          </Button>
-          <Button 
-            asChild
-            variant="outline"
-            className="w-full h-12 text-body-md font-medium rounded-[8px]"
-          >
-            <Link href={`/shop/${shop.id}`}>{t('stampSuccess.continueTour')}</Link>
-          </Button>
+          {isDemoMode ? (
+            <>
+              <Button
+                asChild
+                className="w-full h-12 text-body-md font-medium rounded-[8px]"
+              >
+                <Link href="/demo">{t('demo.backToDemo')}</Link>
+              </Button>
+              <Button
+                asChild
+                variant="outline"
+                className="w-full h-12 text-body-md font-medium rounded-[8px]"
+              >
+                <Link href={`/shop/${shop.id}`}>{t('stampSuccess.continueTour')}</Link>
+              </Button>
+            </>
+          ) : (
+            <>
+              <Button
+                asChild
+                className="w-full h-12 text-body-md font-medium rounded-[8px]"
+              >
+                <Link href="/stamps">{t('stampSuccess.viewMyStamps')}</Link>
+              </Button>
+              <Button
+                asChild
+                variant="outline"
+                className="w-full h-12 text-body-md font-medium rounded-[8px]"
+              >
+                <Link href={`/shop/${shop.id}`}>{t('stampSuccess.continueTour')}</Link>
+              </Button>
+            </>
+          )}
         </div>
 
-        {/* 로그인 유도 */}
-        <div className="mt-8 animate-fade-in-up" style={{ animationDelay: '0.6s' }}>
-          <Link 
-            href="/login" 
-            className="flex items-center gap-2 px-4 py-2.5 rounded-full bg-secondary hover:bg-accent transition-colors"
-          >
-            <span className="text-body-sm text-foreground">{t('stampSuccess.loginPrompt')}</span>
-          </Link>
-        </div>
+        {/* 로그인 유도 (데모 모드에서는 숨김) */}
+        {!isDemoMode && (
+          <div className="mt-8 animate-fade-in-up" style={{ animationDelay: '0.6s' }}>
+            <Link
+              href="/login"
+              className="flex items-center gap-2 px-4 py-2.5 rounded-full bg-secondary hover:bg-accent transition-colors"
+            >
+              <span className="text-body-sm text-foreground">{t('stampSuccess.loginPrompt')}</span>
+            </Link>
+          </div>
+        )}
       </div>
     </div>
   )

@@ -415,14 +415,35 @@ export const ENTRANCE_TOTEM = {
 
 // 사용자 ID 생성
 export function getUserId(): string {
-  if (typeof window === 'undefined') return 'demo-user'
-  
+  if (typeof window === 'undefined') return 'ssr-user'
+
   let userId = localStorage.getItem('gongbang-user-id')
   if (!userId) {
     userId = `user-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`
     localStorage.setItem('gongbang-user-id', userId)
   }
   return userId
+}
+
+// 데모 모드 전용 사용자 ID (Supabase에 demo- prefix로 저장)
+export function getDemoUserId(): string {
+  if (typeof window === 'undefined') return 'demo-ssr'
+
+  let userId = localStorage.getItem('gongbang-demo-user-id')
+  if (!userId) {
+    userId = `demo-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`
+    localStorage.setItem('gongbang-demo-user-id', userId)
+  }
+  return userId
+}
+
+// 데모 스탬프 초기화 — 새 ID 발급
+export function resetDemoUserId(): string {
+  if (typeof window === 'undefined') return 'demo-ssr'
+
+  const newId = `demo-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`
+  localStorage.setItem('gongbang-demo-user-id', newId)
+  return newId
 }
 
 export function getShopByNfcId(nfcId: string): Shop | null {

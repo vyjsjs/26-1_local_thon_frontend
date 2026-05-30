@@ -1,5 +1,5 @@
-import { ApiTest } from '@/components/api-test'
+import { redirect } from 'next/navigation'
 
 export default function ApiTestPage() {
-  return <ApiTest />
+  redirect('/')
 }

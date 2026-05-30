@@ -1,7 +1,7 @@
 // 백엔드(FastAPI + Supabase) 스탬프/사용자 API 클라이언트
 // NEXT_PUBLIC_API_URL 환경변수로 백엔드 주소 설정 (기본: 로컬 8000)
 
-const API_BASE = (process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000').replace(/\/$/, '')
+const API_BASE = (process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:8000').replace(/\/$/, '')
 
 export interface CollectResult {
   success: boolean

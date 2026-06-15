@@ -115,13 +115,13 @@ export function HomeContent() {
                 {t('home.stampTourDesc')}
               </p>
             </div>
-            <div className="w-24 h-24 rounded-[14px] overflow-hidden bg-card shadow-lg animate-float flex-shrink-0">
+            <div className="w-28 h-28 animate-float flex-shrink-0">
               <Image
-                src="/mascots/main-mascot.svg"
+                src="/mascots/main-mascot.png"
                 alt={lang === 'en' ? 'Craft Street Mascot' : '공방거리 마스코트'}
-                width={96}
-                height={96}
-                className="w-full h-full object-cover"
+                width={112}
+                height={112}
+                className="w-full h-full object-contain drop-shadow-xl"
                 priority
               />
             </div>

@@ -30,13 +30,13 @@ export default function MascotPage() {
       <div className="px-5 py-6 space-y-5">
         {/* 메인 마스코트 */}
         <section className="relative overflow-hidden bg-gradient-to-br from-primary/10 via-accent/20 to-secondary rounded-2xl p-6 text-center animate-fade-in-up">
-          <div className="w-28 h-28 mx-auto mb-4 rounded-2xl overflow-hidden bg-card shadow-lg animate-float">
+          <div className="w-32 h-32 mx-auto mb-4 animate-float">
             <Image
-              src="/mascots/main-mascot.svg"
+              src="/mascots/main-mascot.png"
               alt={t('mascot.mainMascot')}
-              width={112}
-              height={112}
-              className="w-full h-full object-cover"
+              width={128}
+              height={128}
+              className="w-full h-full object-contain drop-shadow-xl"
               priority
             />
           </div>

@@ -56,13 +56,13 @@ export default function AboutPage() {
         <Link href="/about/mascot">
           <section className="bg-gradient-to-br from-primary/8 via-accent to-secondary rounded-[14px] p-5 animate-fade-in-up card-interactive" style={{ animationDelay: '0.15s' }}>
             <div className="flex items-center gap-4">
-              <div className="w-16 h-16 rounded-[14px] bg-card shadow-sm overflow-hidden flex-shrink-0">
+              <div className="w-16 h-16 flex-shrink-0">
                 <Image
-                  src="/mascots/main-mascot.svg"
+                  src="/mascots/main-mascot.png"
                   alt={t('about.mascotTitle')}
                   width={64}
                   height={64}
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-contain drop-shadow-md"
                 />
               </div>
               <div className="flex-1">

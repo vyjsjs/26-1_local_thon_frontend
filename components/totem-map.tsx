@@ -14,14 +14,15 @@ interface TotemMapProps {
   onTotemClick?: (shopId: string) => void
 }
 
+// 실제 행궁동 공방거리 좌표 범위에 맞춰 조정 (카카오맵 미사용, SVG 약식 지도)
 const MAP_CONFIG = {
   width: 360,
   height: 420,
   padding: 30,
-  minLat: 37.2855,
-  maxLat: 37.2885,
-  minLng: 127.0165,
-  maxLng: 127.0195,
+  minLat: 37.2805,
+  maxLat: 37.2840,
+  minLng: 127.0133,
+  maxLng: 127.0165,
 }
 
 function latLngToXY(lat: number, lng: number) {

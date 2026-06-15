@@ -182,8 +182,8 @@ export function StampCard({ shop, isCollected, showDetails = false, className }:
             </h3>
             {showDetails && (
               <p className="text-caption-sm text-muted-foreground mt-0.5 line-clamp-1">
-                {shop.hasExperience 
-                  ? `${t('common.experiences')} ${shop.experiences.length}${lang === 'en' ? '' : '개'}` 
+                {shop.hasExperience
+                  ? (shop.tagline ? (lang === 'en' ? shop.taglineEn : shop.tagline) : t('common.experienceAvailable'))
                   : t('common.salesOnly')}
               </p>
             )}

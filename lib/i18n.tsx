@@ -32,6 +32,7 @@ const translations: Record<Language, Record<string, string>> = {
     'common.entrance': '입구',
     'common.salesOnly': '판매 전용',
     'common.experiences': '체험',
+    'common.experienceAvailable': '체험 가능',
 
     // 홈
     'home.title': '공방거리',
@@ -78,6 +79,13 @@ const translations: Record<Language, Record<string, string>> = {
     'shop.browseOther': '다른 공방 둘러보기',
     'shop.stampGet': '스탬프 획득!',
     'shop.stampCollectedMsg': '스탬프를 수집했습니다',
+    'shop.sellingPoint': '이 가게의 한 줄',
+    'shop.contact': '가게 연락처',
+    'shop.reservation': '예약 방식',
+    'shop.businessHours': '영업 시간',
+    'shop.services': '제공 서비스',
+    'shop.priceRange': '가격대',
+    'shop.referenceImages': '참고 이미지',
 
     // 지도
     'map.title': '토템 지도',
@@ -94,7 +102,7 @@ const translations: Record<Language, Record<string, string>> = {
     'about.craftStreet': '공방거리',
     'about.mainTitle': '전통과 현대가 어우러진\n수공예 문화의 중심지',
     'about.desc1': '수원 화성의 정문인 장안문에서 화성행궁으로 이어지는 행궁동 일대에는 다양한 공방들이 모여 있는 공방거리가 형성되어 있습니다.',
-    'about.desc2': '떡, 한복, 도자기, 목공예, 천연염색 등 다양한 분야의 장인들이 정성을 다해 작품을 만들고, 그 기술을 전하고 있습니다.',
+    'about.desc2': '한복, 도예, 원석·칠보·라탄 공예, 전통 다과 등 다양한 분야의 장인들이 정성을 다해 작품을 만들고, 그 기술을 전하고 있습니다.',
     'about.mascotTitle': '공방거리 마스코트',
     'about.mascotDesc': '귀여운 마스코트들을 만나보세요',
     'about.directions': '찾아오시는 길',
@@ -143,8 +151,9 @@ const translations: Record<Language, Record<string, string>> = {
 
     // 캐릭터 갤러리
     'gallery.title': '모든 캐릭터',
-    'gallery.subtitle': '공방거리의 귀여운 캐릭터 14종을 만나보세요',
-    'gallery.totalCharacters': '총 14종 캐릭터',
+    'gallery.subtitle': '공방거리의 귀여운 캐릭터들을 만나보세요',
+    'gallery.totalCharactersPrefix': '총',
+    'gallery.totalCharactersSuffix': '종 캐릭터',
     'gallery.collected': '개 수집',
 
     // 스탬프 획득 완료 화면
@@ -201,6 +210,7 @@ const translations: Record<Language, Record<string, string>> = {
     'common.entrance': 'Entrance',
     'common.salesOnly': 'Sales Only',
     'common.experiences': 'Experiences',
+    'common.experienceAvailable': 'Experience Available',
 
     // 홈
     'home.title': 'Craft Street',
@@ -247,6 +257,13 @@ const translations: Record<Language, Record<string, string>> = {
     'shop.browseOther': 'Browse Other Workshops',
     'shop.stampGet': 'Stamp Collected!',
     'shop.stampCollectedMsg': 'stamp has been collected',
+    'shop.sellingPoint': 'In One Line',
+    'shop.contact': 'Contact',
+    'shop.reservation': 'Reservation',
+    'shop.businessHours': 'Business Hours',
+    'shop.services': 'Services',
+    'shop.priceRange': 'Price Range',
+    'shop.referenceImages': 'Photos',
 
     // 지도
     'map.title': 'Totem Map',
@@ -263,7 +280,7 @@ const translations: Record<Language, Record<string, string>> = {
     'about.craftStreet': 'Craft Street',
     'about.mainTitle': 'Where tradition meets\nmodern craftsmanship',
     'about.desc1': 'The Haenggung-dong area, stretching from Janganmun Gate to Hwaseong Haenggung Palace, is home to a vibrant craft street with diverse workshops.',
-    'about.desc2': 'Master artisans in rice cakes, hanbok, pottery, woodcraft, and natural dyeing create and share their skills here.',
+    'about.desc2': 'Master artisans in hanbok, pottery, gemstone, cloisonné, and rattan crafts, as well as traditional desserts, create and share their skills here.',
     'about.mascotTitle': 'Craft Street Mascots',
     'about.mascotDesc': 'Meet our cute mascots!',
     'about.directions': 'How to Get Here',
@@ -312,8 +329,9 @@ const translations: Record<Language, Record<string, string>> = {
 
     // 캐릭터 갤러리
     'gallery.title': 'All Characters',
-    'gallery.subtitle': 'Meet all 14 cute characters of Craft Street',
-    'gallery.totalCharacters': '14 Characters Total',
+    'gallery.subtitle': 'Meet the cute characters of Craft Street',
+    'gallery.totalCharactersPrefix': '',
+    'gallery.totalCharactersSuffix': 'Characters Total',
     'gallery.collected': ' collected',
 
     // 스탬프 획득 완료 화면

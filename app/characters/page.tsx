@@ -53,7 +53,9 @@ export default function CharactersPage() {
             <div className="flex items-center gap-3">
               <div className="flex items-center gap-2 px-3 py-1.5 bg-card rounded-full border border-border">
                 <div className="w-2 h-2 rounded-full bg-primary" />
-                <span className="text-badge text-foreground">{t('gallery.totalCharacters')}</span>
+                <span className="text-badge text-foreground">
+                  {[t('gallery.totalCharactersPrefix'), SHOPS.length, t('gallery.totalCharactersSuffix')].filter(Boolean).join(' ')}
+                </span>
               </div>
               <div className="flex items-center gap-2 px-3 py-1.5 bg-card rounded-full border border-border">
                 <Check className="w-3 h-3 text-success" />

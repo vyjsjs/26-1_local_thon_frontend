@@ -9,10 +9,13 @@ import { notFound } from 'next/navigation'
 import { SHOPS, getShopByNfcId } from '@/lib/data'
 import { useStamps } from '@/hooks/use-stamps'
 import { useI18n } from '@/lib/i18n'
-import { TouchSuwonButton, NoExperienceNotice } from '@/components/touch-suwon-button'
+import { TouchSuwonButton } from '@/components/touch-suwon-button'
 import { LanguageToggle } from '@/components/language-toggle'
 import { cn } from '@/lib/utils'
-import { ChevronLeft, MapPin, Clock, Check, Sparkles, ShoppingBag } from 'lucide-react'
+import {
+  ChevronLeft, MapPin, Clock, Check, Sparkles,
+  Phone, CalendarCheck, Tag, Wrench, Quote,
+} from 'lucide-react'
 
 interface ShopPageProps {
   params: Promise<{ id: string }>
@@ -21,9 +24,9 @@ interface ShopPageProps {
 function ShopContent({ id }: { id: string }) {
   const router = useRouter()
   const searchParams = useSearchParams()
-  const { stamps, collect, isCollected } = useStamps()
+  const { collect, isCollected } = useStamps()
   const { lang, t } = useI18n()
-  
+
   const [justCollected, setJustCollected] = useState(false)
 
   const shop = SHOPS.find(s => s.id === id)
@@ -56,18 +59,31 @@ function ShopContent({ id }: { id: string }) {
 
   const collected = isCollected(shop.id)
   const shopName = lang === 'en' ? shop.nameEn : shop.name
-  const shopDesc = lang === 'en' ? shop.descriptionEn : shop.description
   const shopCategory = lang === 'en' ? shop.categoryEn : shop.category
   const shopAddress = lang === 'en' ? shop.addressEn : shop.address
-  const mascotDesc = lang === 'en' ? shop.mascotDescriptionEn : shop.mascotDescription
+  const mainMessage = lang === 'en' ? shop.mainMessageEn : shop.mainMessage
+  const tagline = lang === 'en' ? shop.taglineEn : shop.tagline
+  const reservation = lang === 'en' ? shop.reservationMethodEn : shop.reservationMethod
+  const businessHours = lang === 'en' ? shop.businessHoursEn : shop.businessHours
+  const services = lang === 'en' ? shop.servicesEn : shop.services
+  const priceRange = lang === 'en' ? shop.priceRangeEn : shop.priceRange
+
+  // 연락처/예약/영업시간 — 가게에 정보가 있는 항목만 노출
+  const infoRows = [
+    shop.phone && { icon: Phone, label: t('shop.contact'), value: shop.phone },
+    reservation && { icon: CalendarCheck, label: t('shop.reservation'), value: reservation },
+    businessHours && { icon: Clock, label: t('shop.businessHours'), value: businessHours },
+  ].filter(Boolean) as { icon: typeof Phone; label: string; value: string }[]
+
+  const referenceImages = shop.referenceImages ?? []
 
   return (
     <div className="min-h-screen pb-28 bg-background">
       {/* 헤더 */}
       <header className="sticky top-0 z-30 glass border-b border-border">
-        <div className="px-4 py-3 flex items-center gap-3">
-          <button 
-            onClick={() => router.back()} 
+        <div className="max-w-md mx-auto px-4 py-3 flex items-center gap-3">
+          <button
+            onClick={() => router.back()}
             className="w-9 h-9 rounded-full bg-secondary flex items-center justify-center hover:bg-accent transition-colors"
           >
             <ChevronLeft className="w-5 h-5 text-foreground" />
@@ -86,8 +102,8 @@ function ShopContent({ id }: { id: string }) {
         </div>
       </header>
 
-      <div className="px-4 py-6 space-y-5">
-        {/* 마스코트 히어로 */}
+      <div className="max-w-md mx-auto px-4 py-6 space-y-5">
+        {/* 1. 스탬프 획득 카드 (마스코트 + 가게명 + 메인 메시지) */}
         <section className="relative overflow-hidden rounded-[20px] bg-gradient-to-br from-secondary via-accent to-secondary p-5 animate-fade-in-up">
           <div className="flex items-center gap-5">
             <div className={cn(
@@ -126,109 +142,115 @@ function ShopContent({ id }: { id: string }) {
                   ) : t('common.notCollected')}
                 </span>
               </div>
-              <h2 className="text-display-sm text-foreground mb-1.5 text-balance">{shopName}</h2>
-              <p className="text-body-sm text-muted-foreground leading-relaxed line-clamp-2">
-                {shopDesc}
-              </p>
+              <h2 className="text-display-sm text-foreground mb-1 text-balance">{shopName}</h2>
+              <p className="text-badge text-muted-foreground">{shopCategory}</p>
             </div>
           </div>
+
+          {/* 메인 메시지 */}
+          {mainMessage && (
+            <blockquote className="mt-4 flex gap-2.5 rounded-[14px] bg-card/70 backdrop-blur-sm p-4">
+              <Quote className="w-4 h-4 text-primary flex-shrink-0 mt-0.5" />
+              <p className="text-body-sm text-foreground leading-relaxed text-balance">
+                {mainMessage}
+              </p>
+            </blockquote>
+          )}
         </section>
 
-        {/* 마스코트 소개 */}
-        <section className="card-base p-4 animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
-          <h3 className="text-caption text-foreground mb-1.5 flex items-center gap-1.5">
-            <span className="w-1.5 h-1.5 rounded-full bg-primary" />
-            {t('shop.thisMascot')}
-          </h3>
-          <p className="text-body-sm text-muted-foreground leading-relaxed">
-            {mascotDesc}
-          </p>
-        </section>
+        {/* 2. 셀링 포인트 한 줄 */}
+        {tagline && (
+          <section className="card-base p-4 animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
+            <h3 className="text-caption text-muted-foreground mb-1.5 flex items-center gap-1.5">
+              <Sparkles className="w-3.5 h-3.5 text-primary" />
+              {t('shop.sellingPoint')}
+            </h3>
+            <p className="text-title-md text-foreground leading-snug text-balance">
+              {tagline}
+            </p>
+          </section>
+        )}
 
-        {/* 위치 */}
-        <section className="card-base p-4 animate-fade-in-up" style={{ animationDelay: '0.15s' }}>
+        {/* 3. 위치 + 연락처 / 예약 방식 / 영업 시간 */}
+        <section className="card-base p-4 space-y-4 animate-fade-in-up" style={{ animationDelay: '0.15s' }}>
           <div className="flex items-start gap-3">
             <div className="w-9 h-9 rounded-[8px] bg-secondary flex items-center justify-center flex-shrink-0">
               <MapPin className="w-4 h-4 text-muted-foreground" />
             </div>
-            <div>
+            <div className="min-w-0">
               <p className="text-caption text-foreground mb-0.5">{t('common.location')}</p>
-              <p className="text-body-sm text-muted-foreground">{shopAddress}</p>
+              <p className="text-body-sm text-muted-foreground leading-relaxed">{shopAddress}</p>
             </div>
           </div>
-        </section>
 
-        {/* 체험 프로그램 */}
-        <section className="animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
-          <h3 className="text-title-md text-foreground mb-3 flex items-center gap-2">
-            <Sparkles className="w-4 h-4 text-primary" />
-            {t('shop.experienceProgram')}
-          </h3>
-          {shop.hasExperience ? (
-            <div className="space-y-3">
-              {shop.experiences.map((exp) => (
-                <div
-                  key={exp.id}
-                  className="card-base p-4 card-interactive"
-                >
-                  <div className="flex justify-between items-start mb-2">
-                    <h4 className="text-caption text-foreground">
-                      {lang === 'en' ? exp.nameEn : exp.name}
-                    </h4>
-                    <span className="text-caption text-primary">
-                      {exp.price.toLocaleString()}{lang === 'en' ? ' KRW' : '원'}
-                    </span>
+          {infoRows.length > 0 && (
+            <div className="space-y-4 pt-1 border-t border-border">
+              {infoRows.map(({ icon: Icon, label, value }) => (
+                <div key={label} className="flex items-start gap-3 first:pt-3">
+                  <div className="w-9 h-9 rounded-[8px] bg-secondary flex items-center justify-center flex-shrink-0">
+                    <Icon className="w-4 h-4 text-muted-foreground" />
                   </div>
-                  <p className="text-body-sm text-muted-foreground mb-3 leading-relaxed">
-                    {lang === 'en' ? exp.descriptionEn : exp.description}
-                  </p>
-                  <div className="flex items-center gap-1.5 text-badge text-muted-foreground">
-                    <Clock className="w-3.5 h-3.5" />
-                    <span>{t('common.duration')} {lang === 'en' ? exp.durationEn : exp.duration}</span>
+                  <div className="min-w-0">
+                    <p className="text-caption text-foreground mb-0.5">{label}</p>
+                    <p className="text-body-sm text-muted-foreground leading-relaxed">{value}</p>
                   </div>
                 </div>
               ))}
             </div>
-          ) : (
-            <NoExperienceNotice />
           )}
         </section>
 
-        {/* 메뉴/상품 */}
-        {shop.menu.length > 0 && (
+        {/* 4. 제공 서비스 */}
+        {services && (
+          <section className="animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
+            <h3 className="text-title-md text-foreground mb-3 flex items-center gap-2">
+              <Wrench className="w-4 h-4 text-primary" />
+              {t('shop.services')}
+            </h3>
+            <div className="card-base p-4">
+              <p className="text-body-sm text-muted-foreground leading-relaxed">{services}</p>
+            </div>
+          </section>
+        )}
+
+        {/* 5. 가격대 */}
+        {priceRange && (
           <section className="animate-fade-in-up" style={{ animationDelay: '0.25s' }}>
             <h3 className="text-title-md text-foreground mb-3 flex items-center gap-2">
-              <ShoppingBag className="w-4 h-4 text-primary" />
-              {shop.hasExperience ? t('shop.menuProducts') : t('shop.featuredProducts')}
+              <Tag className="w-4 h-4 text-primary" />
+              {t('shop.priceRange')}
             </h3>
-            <div className="card-base overflow-hidden divide-y divide-border">
-              {shop.menu.map((item) => (
-                <div
-                  key={item.id}
-                  className="flex justify-between items-center p-4"
-                >
-                  <div>
-                    <p className="text-caption text-foreground">
-                      {lang === 'en' ? item.nameEn : item.name}
-                    </p>
-                    <p className="text-badge text-muted-foreground mt-0.5">
-                      {lang === 'en' ? item.descriptionEn : item.description}
-                    </p>
-                  </div>
-                  <span className="text-caption text-primary flex-shrink-0 ml-4">
-                    {item.price.toLocaleString()}{lang === 'en' ? ' KRW' : '원'}
-                  </span>
+            <div className="card-base p-4">
+              <p className="text-body-sm text-muted-foreground leading-relaxed whitespace-pre-line">{priceRange}</p>
+            </div>
+          </section>
+        )}
+
+        {/* 6. 참고 이미지 */}
+        {referenceImages.length > 0 && (
+          <section className="animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
+            <h3 className="text-title-md text-foreground mb-3">{t('shop.referenceImages')}</h3>
+            <div className="grid grid-cols-2 gap-2">
+              {referenceImages.map((src, i) => (
+                <div key={src} className="relative aspect-square rounded-[14px] overflow-hidden bg-secondary">
+                  <Image
+                    src={src}
+                    alt={`${shopName} ${i + 1}`}
+                    fill
+                    sizes="(max-width: 448px) 50vw, 224px"
+                    className="object-cover"
+                  />
                 </div>
               ))}
             </div>
           </section>
         )}
 
-        {/* 다른 공방 */}
-        <section className="animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
+        {/* 7. 다른 공방 둘러보기 */}
+        <section className="animate-fade-in-up" style={{ animationDelay: '0.35s' }}>
           <h3 className="text-title-md text-foreground mb-3">{t('shop.otherShops')}</h3>
           <div className="flex gap-3 overflow-x-auto pb-2 -mx-4 px-4 hide-scrollbar">
-            {SHOPS.filter(s => s.id !== shop.id).slice(0, 5).map((otherShop) => {
+            {SHOPS.filter(s => s.id !== shop.id).slice(0, 6).map((otherShop) => {
               const otherCollected = isCollected(otherShop.id)
               return (
                 <Link
@@ -254,7 +276,7 @@ function ShopContent({ id }: { id: string }) {
                   <p className="text-caption-sm font-medium text-center text-foreground line-clamp-1">
                     {lang === 'en' ? otherShop.nameEn : otherShop.name}
                   </p>
-                  <p className="text-badge text-center text-muted-foreground">
+                  <p className="text-badge text-center text-muted-foreground line-clamp-1">
                     {lang === 'en' ? otherShop.categoryEn : otherShop.category}
                   </p>
                 </Link>
@@ -274,7 +296,7 @@ function ShopContent({ id }: { id: string }) {
               <p className="text-body-sm text-muted-foreground mb-2">
                 {t('shop.noExperienceBottom')}
               </p>
-              <Link 
+              <Link
                 href="/stamps"
                 className="inline-flex items-center gap-1 text-primary text-caption hover:text-primary/80 transition-colors"
               >
@@ -292,7 +314,7 @@ function ShopContent({ id }: { id: string }) {
 
 export default function ShopPage({ params }: ShopPageProps) {
   const { id } = use(params)
-  
+
   return (
     <Suspense fallback={
       <div className="min-h-screen flex items-center justify-center">

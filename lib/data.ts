@@ -106,7 +106,7 @@ export const SHOPS: Shop[] = [
     servicesEn: 'Sale of gemstone & bead accessories and craft experiences (necklaces, bracelets, earrings, brooches, keyrings, ribbon crafts, etc.)',
     priceRange: '5,000 ~ 50,000원 (원석에 따라 가격 문의)',
     priceRangeEn: 'KRW 5,000 ~ 50,000 (price varies by gemstone)',
-    referenceImages: [],
+    referenceImages: ['/shops/shop-1/1.png', '/shops/shop-1/2.png', '/shops/shop-1/3.png', '/shops/shop-1/4.png', '/shops/shop-1/5.png', '/shops/shop-1/6.png'],
   },
   {
     id: 'shop-2',
@@ -140,7 +140,7 @@ export const SHOPS: Shop[] = [
     servicesEn: 'Self-snap photo studio with hanbok rental included',
     priceRange: '1인 30,000원~ (한복 포함 50,000원), 2~4인 단체 구성 별도',
     priceRangeEn: 'From KRW 30,000 per person (KRW 50,000 with hanbok); group rates for 2–4 people',
-    referenceImages: [],
+    referenceImages: ['/shops/shop-2/1.png', '/shops/shop-2/2.png', '/shops/shop-2/3.png', '/shops/shop-2/4.png'],
   },
   {
     id: 'shop-3',
@@ -174,7 +174,7 @@ export const SHOPS: Shop[] = [
     servicesEn: 'Hanbok experience and rental (including pet hanbok)',
     priceRange: '1시간 30분 30,000원 / 2시간 35,000원 / 3시간 45,000원 / 종일 60,000원 / 1박2일 70,000원',
     priceRangeEn: '1.5h KRW 30,000 / 2h KRW 35,000 / 3h KRW 45,000 / all-day KRW 60,000 / 2 days KRW 70,000',
-    referenceImages: [],
+    referenceImages: ['/shops/shop-3/1.png', '/shops/shop-3/2.png', '/shops/shop-3/3.png', '/shops/shop-3/4.png'],
   },
   {
     id: 'shop-4',
@@ -208,7 +208,7 @@ export const SHOPS: Shop[] = [
     servicesEn: "Children's crafts: pottery, bag & stencil decorating, color beads, wooden dinosaur character frames, etc.",
     priceRange: '체험 종류에 따라 상이 (예약 시 문의)',
     priceRangeEn: 'Varies by experience (inquire when booking)',
-    referenceImages: [],
+    referenceImages: ['/shops/shop-4/1.png', '/shops/shop-4/2.png', '/shops/shop-4/3.png', '/shops/shop-4/4.png'],
   },
   {
     id: 'shop-5',
@@ -242,7 +242,7 @@ export const SHOPS: Shop[] = [
     servicesEn: 'Cloisonné medal necklaces, guestbook cloisonné, bowls, accessories, etc. / certification & pro courses',
     priceRange: '재료에 따라 체험비 1만원부터',
     priceRangeEn: 'Experience fees from KRW 10,000 depending on materials',
-    referenceImages: [],
+    referenceImages: ['/shops/shop-5/1.png', '/shops/shop-5/2.png', '/shops/shop-5/3.png'],
   },
   {
     id: 'shop-6',
@@ -276,7 +276,7 @@ export const SHOPS: Shop[] = [
     servicesEn: 'Hand-drip coffee from house-roasted beans, other drinks, and handmade desserts',
     priceRange: '크림레퓨즈 7,500원 / 레퓨즈페너 7,000원 / 콘파냐 5,500원',
     priceRangeEn: 'Cream Refuge KRW 7,500 / Refugespänner KRW 7,000 / Conpanna KRW 5,500',
-    referenceImages: [],
+    referenceImages: ['/shops/shop-6/1.png', '/shops/shop-6/2.png', '/shops/shop-6/3.png', '/shops/shop-6/4.png'],
   },
   {
     id: 'shop-7',
@@ -310,7 +310,7 @@ export const SHOPS: Shop[] = [
     servicesEn: 'Makgeolli, Korean side dishes, kimchi-jjim bossam, kimchi stew, etc.',
     priceRange: '김치찜보쌈 13,900원 / 청송사과막걸리 6,000원 / 소고기육전 16,900원 (2인 기준 약 34,000원)',
     priceRangeEn: 'Kimchi-jjim bossam KRW 13,900 / Cheongsong apple makgeolli KRW 6,000 / beef jeon KRW 16,900 (~KRW 34,000 for 2)',
-    referenceImages: [],
+    referenceImages: ['/shops/shop-7/1.png', '/shops/shop-7/2.png', '/shops/shop-7/3.png', '/shops/shop-7/4.png'],
   },
   {
     id: 'shop-8',
@@ -344,7 +344,7 @@ export const SHOPS: Shop[] = [
     servicesEn: 'Paper crafts, lamp crafts, hands-on programs',
     priceRange: '주문형 상품 — 예산·디자인·꽃 종류별 상담 필요',
     priceRangeEn: 'Made-to-order — consultation needed by budget, design, and flower type',
-    referenceImages: [],
+    referenceImages: ['/shops/shop-8/1.png', '/shops/shop-8/2.png'],
   },
   {
     id: 'shop-9',
@@ -378,7 +378,7 @@ export const SHOPS: Shop[] = [
     servicesEn: 'Sale of ceramics, bowls, mugs, interior items, and pottery experiences (transfer cups, wheel throwing, etc.)',
     priceRange: '전사컵 15,000원 / 작은 접시 20,000원 / 중간 접시 30,000원 / 물레체험 25,000원 (물레 예약 필수)',
     priceRangeEn: 'Transfer cup KRW 15,000 / small plate KRW 20,000 / medium plate KRW 30,000 / wheel experience KRW 25,000 (wheel by reservation)',
-    referenceImages: [],
+    referenceImages: ['/shops/shop-9/1.png', '/shops/shop-9/2.png', '/shops/shop-9/3.png', '/shops/shop-9/4.png'],
   },
   {
     id: 'shop-10',
@@ -412,7 +412,7 @@ export const SHOPS: Shop[] = [
     servicesEn: 'Rattan-craft shop, one-day class, regular courses, certification course, group classes',
     priceRange: '원데이 35,000~90,000원 / 티코스터 만들기 10,000원 / 취미반 148,000~157,000원 / 정규반 초급 350,000·중급 500,000원 / 자격증반 1,650,000원',
     priceRangeEn: 'One-day KRW 35,000–90,000 / coaster KRW 10,000 / hobby KRW 148,000–157,000 / regular beginner 350,000·intermediate 500,000 / certification KRW 1,650,000',
-    referenceImages: [],
+    referenceImages: ['/shops/shop-10/1.png', '/shops/shop-10/2.png', '/shops/shop-10/3.png', '/shops/shop-10/4.png'],
   },
   {
     id: 'shop-11',
@@ -446,7 +446,7 @@ export const SHOPS: Shop[] = [
     servicesEn: 'Traditional tea, sweets platters, bingsu, yakgwa, rice cakes, gift sets, platter orders, traditional cooking classes',
     priceRange: '다과상 약 15,000원 / 빙수 약 15,000원 / 아이스아메리카노 약 3,500원',
     priceRangeEn: 'Sweets platter ~KRW 15,000 / bingsu ~KRW 15,000 / iced americano ~KRW 3,500',
-    referenceImages: [],
+    referenceImages: ['/shops/shop-11/1.png', '/shops/shop-11/2.png', '/shops/shop-11/3.png', '/shops/shop-11/4.png', '/shops/shop-11/5.png'],
   },
   {
     id: 'shop-12',
@@ -480,7 +480,7 @@ export const SHOPS: Shop[] = [
     servicesEn: 'Hanbok rental, traditional costume experience, traditional hanbok introduction',
     priceRange: '최소 1시간 10,000원부터 (작품·구성에 따라 상이)',
     priceRangeEn: 'From KRW 10,000 per hour (varies by piece and styling)',
-    referenceImages: [],
+    referenceImages: ['/shops/shop-12/1.png', '/shops/shop-12/2.png', '/shops/shop-12/3.png'],
   },
   {
     id: 'shop-13',
@@ -513,7 +513,7 @@ export const SHOPS: Shop[] = [
     servicesEn: 'Aesthetic goods, gift items, delivery available',
     priceRange: '제품별 상이 (인스타그램에서 가격·재고 문의)',
     priceRangeEn: 'Varies by item (inquire price/stock via Instagram)',
-    referenceImages: [],
+    referenceImages: ['/shops/shop-13/1.png', '/shops/shop-13/2.png', '/shops/shop-13/3.png', '/shops/shop-13/4.png', '/shops/shop-13/5.png'],
   },
 ]
 

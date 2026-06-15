@@ -14,7 +14,7 @@ import { LanguageToggle } from '@/components/language-toggle'
 import { cn } from '@/lib/utils'
 import {
   ChevronLeft, MapPin, Clock, Check, Sparkles,
-  Phone, CalendarCheck, Tag, Wrench, Quote,
+  Phone, CalendarCheck, Tag, Wrench, Quote, Image as ImageIcon,
 } from 'lucide-react'
 
 interface ShopPageProps {
@@ -61,6 +61,7 @@ function ShopContent({ id }: { id: string }) {
   const shopName = lang === 'en' ? shop.nameEn : shop.name
   const shopCategory = lang === 'en' ? shop.categoryEn : shop.category
   const shopAddress = lang === 'en' ? shop.addressEn : shop.address
+  const shopDesc = lang === 'en' ? shop.descriptionEn : shop.description
   const mainMessage = lang === 'en' ? shop.mainMessageEn : shop.mainMessage
   const tagline = lang === 'en' ? shop.taglineEn : shop.tagline
   const reservation = lang === 'en' ? shop.reservationMethodEn : shop.reservationMethod
@@ -68,7 +69,6 @@ function ShopContent({ id }: { id: string }) {
   const services = lang === 'en' ? shop.servicesEn : shop.services
   const priceRange = lang === 'en' ? shop.priceRangeEn : shop.priceRange
 
-  // 연락처/예약/영업시간 — 가게에 정보가 있는 항목만 노출
   const infoRows = [
     shop.phone && { icon: Phone, label: t('shop.contact'), value: shop.phone },
     reservation && { icon: CalendarCheck, label: t('shop.reservation'), value: reservation },
@@ -76,214 +76,230 @@ function ShopContent({ id }: { id: string }) {
   ].filter(Boolean) as { icon: typeof Phone; label: string; value: string }[]
 
   const referenceImages = shop.referenceImages ?? []
+  const coverImage = referenceImages[0]
+  // 참고 이미지가 아직 없을 때도 레이아웃이 보이도록 플레이스홀더 타일 노출
+  const galleryTiles = referenceImages.length > 0 ? referenceImages : [null, null, null, null]
 
   return (
     <div className="min-h-screen pb-28 bg-background">
-      {/* 헤더 */}
-      <header className="sticky top-0 z-30 glass border-b border-border">
-        <div className="max-w-md mx-auto px-4 py-3 flex items-center gap-3">
+      <div className="max-w-md mx-auto">
+        {/* 커버 영역 */}
+        <div className="relative h-56 w-full overflow-hidden bg-gradient-to-br from-secondary via-accent to-secondary">
+          {coverImage ? (
+            <Image
+              src={coverImage}
+              alt={shopName}
+              fill
+              priority
+              sizes="(max-width: 448px) 100vw, 448px"
+              className="object-cover"
+            />
+          ) : (
+            // 커버 이미지 미등록 시 마스코트 워터마크 배경
+            <div className="absolute inset-0 flex items-center justify-center">
+              <Image
+                src={shop.mascotImage}
+                alt=""
+                width={180}
+                height={180}
+                className="opacity-20 blur-[1px]"
+                priority
+              />
+            </div>
+          )}
+          <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-background to-transparent" />
+
+          {/* 플로팅 컨트롤 */}
           <button
             onClick={() => router.back()}
-            className="w-9 h-9 rounded-full bg-secondary flex items-center justify-center hover:bg-accent transition-colors"
+            className="absolute top-4 left-4 w-9 h-9 rounded-full glass flex items-center justify-center shadow-sm"
+            aria-label="back"
           >
             <ChevronLeft className="w-5 h-5 text-foreground" />
           </button>
-          <div className="flex-1 min-w-0">
-            <h1 className="text-title-md text-foreground truncate">{shopName}</h1>
-            <p className="text-badge text-muted-foreground">{shopCategory}</p>
+          <div className="absolute top-4 right-4 flex items-center gap-2">
+            {collected && (
+              <div className="flex items-center gap-1 px-2.5 py-1.5 rounded-full glass shadow-sm">
+                <Check className="w-3.5 h-3.5 text-primary" />
+                <span className="text-badge text-primary">{t('common.collected')}</span>
+              </div>
+            )}
+            <div className="glass rounded-full shadow-sm">
+              <LanguageToggle compact />
+            </div>
           </div>
-          <LanguageToggle compact />
-          {collected && (
-            <div className="flex items-center gap-1 px-2.5 py-1 rounded-full bg-primary/10">
-              <Check className="w-3.5 h-3.5 text-primary" />
-              <span className="text-badge text-primary">{t('common.collected')}</span>
-            </div>
-          )}
         </div>
-      </header>
 
-      <div className="max-w-md mx-auto px-4 py-6 space-y-5">
-        {/* 1. 스탬프 획득 카드 (마스코트 + 가게명 + 메인 메시지) */}
-        <section className="relative overflow-hidden rounded-[20px] bg-gradient-to-br from-secondary via-accent to-secondary p-5 animate-fade-in-up">
-          <div className="flex items-center gap-5">
-            <div className={cn(
-              'relative w-28 h-28 rounded-[14px] overflow-hidden shadow-lg flex-shrink-0 transition-all',
-              justCollected && 'animate-stamp-collect animate-stamp-glow',
-              collected ? 'ring-2 ring-primary ring-offset-2 ring-offset-secondary' : ''
-            )}>
-              <Image
-                src={shop.mascotImage}
-                alt={`${shopName} ${lang === 'en' ? 'mascot' : '마스코트'}`}
-                width={112}
-                height={112}
-                className={cn(
-                  'w-full h-full object-cover',
-                  !collected && 'grayscale opacity-60'
+        <div className="px-4 pb-6 space-y-5">
+          {/* 1. 마스코트 + 가게명 + 설명 (커버 위로 끌어올린 카드) */}
+          <section className="-mt-12 relative animate-fade-in-up">
+            <div className="flex items-end gap-4">
+              <div className={cn(
+                'relative w-24 h-24 rounded-[18px] overflow-hidden shadow-lg flex-shrink-0 border-4 border-background bg-card transition-all',
+                justCollected && 'animate-stamp-collect animate-stamp-glow',
+                collected ? 'ring-2 ring-primary' : ''
+              )}>
+                <Image
+                  src={shop.mascotImage}
+                  alt={`${shopName} ${lang === 'en' ? 'mascot' : '마스코트'}`}
+                  width={96}
+                  height={96}
+                  className={cn('w-full h-full object-cover', !collected && 'grayscale opacity-70')}
+                  priority
+                />
+                {collected && (
+                  <div className="absolute bottom-0.5 right-0.5 w-6 h-6 rounded-full bg-primary flex items-center justify-center shadow-md">
+                    <Check className="w-3.5 h-3.5 text-primary-foreground" strokeWidth={3} />
+                  </div>
                 )}
-                priority
-              />
-              {collected && (
-                <div className="absolute bottom-1 right-1 w-7 h-7 rounded-full bg-primary flex items-center justify-center shadow-md">
-                  <Check className="w-4 h-4 text-primary-foreground" strokeWidth={3} />
-                </div>
-              )}
-            </div>
-            <div className="flex-1 min-w-0">
-              <div className="flex items-center gap-2 mb-2">
+              </div>
+              <div className="flex-1 min-w-0 pb-1">
                 <span className={cn(
-                  'inline-flex items-center gap-1 px-2 py-0.5 rounded-[4px] text-badge',
+                  'inline-flex items-center gap-1 px-2 py-0.5 rounded-[4px] text-badge mb-1.5',
                   collected ? 'bg-primary/15 text-primary' : 'bg-muted text-muted-foreground'
                 )}>
-                  {collected ? (
-                    <>
-                      <Sparkles className="w-3 h-3" />
-                      {t('shop.stampCollected')}
-                    </>
-                  ) : t('common.notCollected')}
+                  {collected ? (<><Sparkles className="w-3 h-3" />{t('shop.stampCollected')}</>) : t('common.notCollected')}
                 </span>
+                <h1 className="text-display-sm text-foreground leading-tight text-balance">{shopName}</h1>
+                <p className="text-badge text-muted-foreground mt-0.5">{shopCategory}</p>
               </div>
-              <h2 className="text-display-sm text-foreground mb-1 text-balance">{shopName}</h2>
-              <p className="text-badge text-muted-foreground">{shopCategory}</p>
             </div>
-          </div>
 
-          {/* 메인 메시지 */}
-          {mainMessage && (
-            <blockquote className="mt-4 flex gap-2.5 rounded-[14px] bg-card/70 backdrop-blur-sm p-4">
-              <Quote className="w-4 h-4 text-primary flex-shrink-0 mt-0.5" />
-              <p className="text-body-sm text-foreground leading-relaxed text-balance">
-                {mainMessage}
-              </p>
-            </blockquote>
-          )}
-        </section>
+            {shopDesc && (
+              <p className="text-body-sm text-muted-foreground leading-relaxed mt-3">{shopDesc}</p>
+            )}
 
-        {/* 2. 셀링 포인트 한 줄 */}
-        {tagline && (
-          <section className="card-base p-4 animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
-            <h3 className="text-caption text-muted-foreground mb-1.5 flex items-center gap-1.5">
-              <Sparkles className="w-3.5 h-3.5 text-primary" />
-              {t('shop.sellingPoint')}
-            </h3>
-            <p className="text-title-md text-foreground leading-snug text-balance">
-              {tagline}
-            </p>
+            {mainMessage && (
+              <blockquote className="mt-3 flex gap-2.5 rounded-[14px] bg-secondary p-4">
+                <Quote className="w-4 h-4 text-primary flex-shrink-0 mt-0.5" />
+                <p className="text-body-sm text-foreground leading-relaxed text-balance">{mainMessage}</p>
+              </blockquote>
+            )}
           </section>
-        )}
 
-        {/* 3. 위치 + 연락처 / 예약 방식 / 영업 시간 */}
-        <section className="card-base p-4 space-y-4 animate-fade-in-up" style={{ animationDelay: '0.15s' }}>
-          <div className="flex items-start gap-3">
-            <div className="w-9 h-9 rounded-[8px] bg-secondary flex items-center justify-center flex-shrink-0">
-              <MapPin className="w-4 h-4 text-muted-foreground" />
-            </div>
-            <div className="min-w-0">
-              <p className="text-caption text-foreground mb-0.5">{t('common.location')}</p>
-              <p className="text-body-sm text-muted-foreground leading-relaxed">{shopAddress}</p>
-            </div>
-          </div>
-
-          {infoRows.length > 0 && (
-            <div className="space-y-4 pt-1 border-t border-border">
-              {infoRows.map(({ icon: Icon, label, value }) => (
-                <div key={label} className="flex items-start gap-3 first:pt-3">
-                  <div className="w-9 h-9 rounded-[8px] bg-secondary flex items-center justify-center flex-shrink-0">
-                    <Icon className="w-4 h-4 text-muted-foreground" />
-                  </div>
-                  <div className="min-w-0">
-                    <p className="text-caption text-foreground mb-0.5">{label}</p>
-                    <p className="text-body-sm text-muted-foreground leading-relaxed">{value}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
+          {/* 2. 셀링 포인트 한 줄 */}
+          {tagline && (
+            <section className="card-base p-4 animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
+              <h3 className="text-caption text-muted-foreground mb-1.5 flex items-center gap-1.5">
+                <Sparkles className="w-3.5 h-3.5 text-primary" />
+                {t('shop.sellingPoint')}
+              </h3>
+              <p className="text-title-md text-foreground leading-snug text-balance">{tagline}</p>
+            </section>
           )}
-        </section>
 
-        {/* 4. 제공 서비스 */}
-        {services && (
+          {/* 3. 위치 + 연락처 / 예약 방식 / 영업 시간 */}
+          <section className="card-base p-4 space-y-4 animate-fade-in-up" style={{ animationDelay: '0.15s' }}>
+            <div className="flex items-start gap-3">
+              <div className="w-9 h-9 rounded-[8px] bg-secondary flex items-center justify-center flex-shrink-0">
+                <MapPin className="w-4 h-4 text-muted-foreground" />
+              </div>
+              <div className="min-w-0">
+                <p className="text-caption text-foreground mb-0.5">{t('common.location')}</p>
+                <p className="text-body-sm text-muted-foreground leading-relaxed">{shopAddress}</p>
+              </div>
+            </div>
+
+            {infoRows.length > 0 && (
+              <div className="space-y-4 pt-1 border-t border-border">
+                {infoRows.map(({ icon: Icon, label, value }) => (
+                  <div key={label} className="flex items-start gap-3 first:pt-3">
+                    <div className="w-9 h-9 rounded-[8px] bg-secondary flex items-center justify-center flex-shrink-0">
+                      <Icon className="w-4 h-4 text-muted-foreground" />
+                    </div>
+                    <div className="min-w-0">
+                      <p className="text-caption text-foreground mb-0.5">{label}</p>
+                      <p className="text-body-sm text-muted-foreground leading-relaxed">{value}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </section>
+
+          {/* 4. 참고 이미지 */}
           <section className="animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
             <h3 className="text-title-md text-foreground mb-3 flex items-center gap-2">
-              <Wrench className="w-4 h-4 text-primary" />
-              {t('shop.services')}
+              <ImageIcon className="w-4 h-4 text-primary" />
+              {t('shop.referenceImages')}
             </h3>
-            <div className="card-base p-4">
-              <p className="text-body-sm text-muted-foreground leading-relaxed">{services}</p>
-            </div>
-          </section>
-        )}
-
-        {/* 5. 가격대 */}
-        {priceRange && (
-          <section className="animate-fade-in-up" style={{ animationDelay: '0.25s' }}>
-            <h3 className="text-title-md text-foreground mb-3 flex items-center gap-2">
-              <Tag className="w-4 h-4 text-primary" />
-              {t('shop.priceRange')}
-            </h3>
-            <div className="card-base p-4">
-              <p className="text-body-sm text-muted-foreground leading-relaxed whitespace-pre-line">{priceRange}</p>
-            </div>
-          </section>
-        )}
-
-        {/* 6. 참고 이미지 */}
-        {referenceImages.length > 0 && (
-          <section className="animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
-            <h3 className="text-title-md text-foreground mb-3">{t('shop.referenceImages')}</h3>
-            <div className="grid grid-cols-2 gap-2">
-              {referenceImages.map((src, i) => (
-                <div key={src} className="relative aspect-square rounded-[14px] overflow-hidden bg-secondary">
-                  <Image
-                    src={src}
-                    alt={`${shopName} ${i + 1}`}
-                    fill
-                    sizes="(max-width: 448px) 50vw, 224px"
-                    className="object-cover"
-                  />
+            <div className="grid grid-cols-4 gap-2">
+              {galleryTiles.map((src, i) => (
+                <div key={i} className="relative aspect-square rounded-[12px] overflow-hidden bg-secondary flex items-center justify-center">
+                  {src ? (
+                    <Image
+                      src={src}
+                      alt={`${shopName} ${i + 1}`}
+                      fill
+                      sizes="112px"
+                      className="object-cover"
+                    />
+                  ) : (
+                    <ImageIcon className="w-5 h-5 text-muted-foreground/40" />
+                  )}
                 </div>
               ))}
             </div>
           </section>
-        )}
 
-        {/* 7. 다른 공방 둘러보기 */}
-        <section className="animate-fade-in-up" style={{ animationDelay: '0.35s' }}>
-          <h3 className="text-title-md text-foreground mb-3">{t('shop.otherShops')}</h3>
-          <div className="flex gap-3 overflow-x-auto pb-2 -mx-4 px-4 hide-scrollbar">
-            {SHOPS.filter(s => s.id !== shop.id).slice(0, 6).map((otherShop) => {
-              const otherCollected = isCollected(otherShop.id)
-              return (
-                <Link
-                  key={otherShop.id}
-                  href={`/shop/${otherShop.id}`}
-                  className="flex-shrink-0 w-24"
-                >
-                  <div className={cn(
-                    'w-20 h-20 mx-auto rounded-[14px] overflow-hidden mb-2 transition-all',
-                    otherCollected ? 'ring-2 ring-primary ring-offset-2 ring-offset-background' : 'opacity-60'
-                  )}>
-                    <Image
-                      src={otherShop.mascotImage}
-                      alt={lang === 'en' ? otherShop.nameEn : otherShop.name}
-                      width={80}
-                      height={80}
-                      className={cn(
-                        'w-full h-full object-cover',
-                        !otherCollected && 'grayscale'
-                      )}
-                    />
-                  </div>
-                  <p className="text-caption-sm font-medium text-center text-foreground line-clamp-1">
-                    {lang === 'en' ? otherShop.nameEn : otherShop.name}
-                  </p>
-                  <p className="text-badge text-center text-muted-foreground line-clamp-1">
-                    {lang === 'en' ? otherShop.categoryEn : otherShop.category}
-                  </p>
-                </Link>
-              )
-            })}
-          </div>
-        </section>
+          {/* 5. 제공 서비스 */}
+          {services && (
+            <section className="animate-fade-in-up" style={{ animationDelay: '0.25s' }}>
+              <h3 className="text-title-md text-foreground mb-3 flex items-center gap-2">
+                <Wrench className="w-4 h-4 text-primary" />
+                {t('shop.services')}
+              </h3>
+              <div className="card-base p-4">
+                <p className="text-body-sm text-muted-foreground leading-relaxed">{services}</p>
+              </div>
+            </section>
+          )}
+
+          {/* 6. 가격대 */}
+          {priceRange && (
+            <section className="animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
+              <h3 className="text-title-md text-foreground mb-3 flex items-center gap-2">
+                <Tag className="w-4 h-4 text-primary" />
+                {t('shop.priceRange')}
+              </h3>
+              <div className="card-base p-4">
+                <p className="text-body-sm text-muted-foreground leading-relaxed whitespace-pre-line">{priceRange}</p>
+              </div>
+            </section>
+          )}
+
+          {/* 7. 다른 공방 둘러보기 */}
+          <section className="animate-fade-in-up" style={{ animationDelay: '0.35s' }}>
+            <h3 className="text-title-md text-foreground mb-3">{t('shop.otherShops')}</h3>
+            <div className="flex gap-3 overflow-x-auto pb-2 -mx-4 px-4 hide-scrollbar">
+              {SHOPS.filter(s => s.id !== shop.id).slice(0, 6).map((otherShop) => {
+                const otherCollected = isCollected(otherShop.id)
+                return (
+                  <Link key={otherShop.id} href={`/shop/${otherShop.id}`} className="flex-shrink-0 w-24">
+                    <div className={cn(
+                      'w-20 h-20 mx-auto rounded-[14px] overflow-hidden mb-2 transition-all',
+                      otherCollected ? 'ring-2 ring-primary ring-offset-2 ring-offset-background' : 'opacity-60'
+                    )}>
+                      <Image
+                        src={otherShop.mascotImage}
+                        alt={lang === 'en' ? otherShop.nameEn : otherShop.name}
+                        width={80}
+                        height={80}
+                        className={cn('w-full h-full object-cover', !otherCollected && 'grayscale')}
+                      />
+                    </div>
+                    <p className="text-caption-sm font-medium text-center text-foreground line-clamp-1">
+                      {lang === 'en' ? otherShop.nameEn : otherShop.name}
+                    </p>
+                    <p className="text-badge text-center text-muted-foreground line-clamp-1">
+                      {lang === 'en' ? otherShop.categoryEn : otherShop.category}
+                    </p>
+                  </Link>
+                )
+              })}
+            </div>
+          </section>
+        </div>
       </div>
 
       {/* 하단 고정 버튼 */}
@@ -293,9 +309,7 @@ function ShopContent({ id }: { id: string }) {
             <TouchSuwonButton shopId={shop.id} className="w-full" />
           ) : (
             <div className="text-center">
-              <p className="text-body-sm text-muted-foreground mb-2">
-                {t('shop.noExperienceBottom')}
-              </p>
+              <p className="text-body-sm text-muted-foreground mb-2">{t('shop.noExperienceBottom')}</p>
               <Link
                 href="/stamps"
                 className="inline-flex items-center gap-1 text-primary text-caption hover:text-primary/80 transition-colors"
@@ -307,7 +321,6 @@ function ShopContent({ id }: { id: string }) {
           )}
         </div>
       </div>
-
     </div>
   )
 }

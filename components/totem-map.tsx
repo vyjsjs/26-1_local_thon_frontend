@@ -15,14 +15,31 @@ interface TotemMapProps {
 }
 
 // 실제 행궁동 공방거리 좌표 범위에 맞춰 조정 (카카오맵 미사용, SVG 약식 지도)
+// 좌표→XY 매핑이 아래 STREETS(도로 경로)와 일치하도록 고정값으로 둔다.
+// (lib/data.ts 의 가게 coordinates 가 이 범위 안에 들어오도록 배치되어 있음)
 const MAP_CONFIG = {
   width: 360,
   height: 420,
   padding: 30,
   minLat: 37.2805,
-  maxLat: 37.2840,
-  minLng: 127.0133,
-  maxLng: 127.0165,
+  maxLat: 37.2842,
+  minLng: 127.0130,
+  maxLng: 127.0166,
+}
+
+// 실제 행궁동 도로망을 약식으로 표현한 거리 경로 (SVG 좌표계, viewBox 360x420 기준)
+// MAP_CONFIG 와 같은 매핑으로 계산되어 마커 위치와 정렬된다.
+const STREETS = {
+  // 행궁로 (메인 거리): 입구 토템 → 남동쪽으로 이어지는 중심 도로
+  main: 'M 180 30 C 188 45, 195 70, 210 108 C 222 145, 232 175, 245 210 C 265 260, 295 330, 330 390',
+  // 가지 도로들
+  branches: [
+    'M 190 52 L 155 69',                  // 행궁다과 진입로
+    'M 212 122 L 120 150 L 30 166',       // 행궁로26번길 (서쪽 → 장금이 공방)
+    'M 215 120 L 230 157 L 247 147',      // 동측 골목 (꽃을 담다 · 향기도예)
+    'M 220 112 L 265 122 L 305 127 L 315 165', // 정조로801번길 (동쪽 → 이춘섭 명인)
+    'M 258 240 L 272 264 L 258 290 L 247 299 L 222 314', // 행궁로40번길 (카페 레퓨즈 · 갤러리풍경 · 메리골드)
+  ],
 }
 
 function latLngToXY(lat: number, lng: number) {
@@ -59,27 +76,30 @@ export function TotemMap({ stamps = {}, className, onTotemClick }: TotemMapProps
           </pattern>
         </defs>
         <rect width="100%" height="100%" fill="url(#grid)" />
-        
-        {/* 메인 거리 */}
+
+        {/* 거리 — 실제 행궁동 도로망 약식 표현 */}
+        {/* 가지 도로 (골목) */}
+        {STREETS.branches.map((d, i) => (
+          <path
+            key={i}
+            d={d}
+            stroke="var(--muted-foreground)"
+            strokeWidth="7"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            fill="none"
+            opacity="0.14"
+          />
+        ))}
+        {/* 행궁로 (메인 거리) */}
         <path
-          d={`M ${MAP_CONFIG.padding} ${MAP_CONFIG.height * 0.55} 
-              Q ${MAP_CONFIG.width * 0.3} ${MAP_CONFIG.height * 0.5}
-              ${MAP_CONFIG.width * 0.5} ${MAP_CONFIG.height * 0.45}
-              T ${MAP_CONFIG.width - MAP_CONFIG.padding} ${MAP_CONFIG.height * 0.4}`}
+          d={STREETS.main}
           stroke="var(--primary)"
           strokeWidth="10"
           strokeLinecap="round"
+          strokeLinejoin="round"
           fill="none"
-          opacity="0.15"
-        />
-        <path
-          d={`M ${MAP_CONFIG.width * 0.5} ${MAP_CONFIG.padding} 
-              L ${MAP_CONFIG.width * 0.5} ${MAP_CONFIG.height - MAP_CONFIG.padding}`}
-          stroke="var(--muted-foreground)"
-          strokeWidth="6"
-          strokeLinecap="round"
-          fill="none"
-          opacity="0.1"
+          opacity="0.18"
         />
 
         {/* 입구 토템 */}

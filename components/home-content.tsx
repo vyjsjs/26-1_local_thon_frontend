@@ -8,8 +8,9 @@ import { useStamps } from '@/hooks/use-stamps'
 import { useI18n } from '@/lib/i18n'
 import { StampGrid, StampProgress } from '@/components/stamp-grid'
 import { LanguageToggle } from '@/components/language-toggle'
+import { GuideModal } from '@/components/guide-modal'
 import { SHOPS, getShopByNfcId } from '@/lib/data'
-import { ChevronRight, MapPin, Sparkles } from 'lucide-react'
+import { ChevronRight, MapPin, Sparkles, HelpCircle } from 'lucide-react'
 
 export function HomeContent() {
   const router = useRouter()
@@ -18,6 +19,18 @@ export function HomeContent() {
   const { lang, t } = useI18n()
   const [demoTapCount, setDemoTapCount] = useState(0)
   const [showDemoButton, setShowDemoButton] = useState(false)
+  const [showGuide, setShowGuide] = useState(false)
+
+  // 처음 방문 시 자동으로 이용 안내 표시
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+    if (!localStorage.getItem('gongbang-guide-seen')) setShowGuide(true)
+  }, [])
+
+  const closeGuide = useCallback(() => {
+    setShowGuide(false)
+    localStorage.setItem('gongbang-guide-seen', 'true')
+  }, [])
 
   // 로고 5번 탭 → 데모 모드 진입 버튼 노출
   const handleLogoTap = useCallback(() => {
@@ -90,9 +103,16 @@ export function HomeContent() {
                 <span>{t('demo.badge')}</span>
               </Link>
             )}
+            <button
+              onClick={() => setShowGuide(true)}
+              className="w-8 h-8 rounded-full bg-secondary flex items-center justify-center text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"
+              aria-label={t('guide.open')}
+            >
+              <HelpCircle className="w-4 h-4" />
+            </button>
             <LanguageToggle compact />
-            <Link 
-              href="/map" 
+            <Link
+              href="/map"
               className="flex items-center gap-1 text-body-sm text-muted-foreground hover:text-foreground transition-colors"
             >
               <MapPin className="w-4 h-4" />
@@ -265,6 +285,7 @@ export function HomeContent() {
         </section>
       </div>
 
+      <GuideModal open={showGuide} onClose={closeGuide} />
     </div>
   )
 }

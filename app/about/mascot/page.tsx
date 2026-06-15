@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import Image from 'next/image'
+import { useRouter } from 'next/navigation'
 import { SHOPS } from '@/lib/data'
 import { useI18n } from '@/lib/i18n'
 import { Button } from '@/components/ui/button'
@@ -9,6 +10,7 @@ import { LanguageToggle } from '@/components/language-toggle'
 import { ChevronLeft, Sparkles, Box } from 'lucide-react'
 
 export default function MascotPage() {
+  const router = useRouter()
   const { lang, t } = useI18n()
 
   return (
@@ -16,12 +18,13 @@ export default function MascotPage() {
       {/* 헤더 */}
       <header className="sticky top-0 z-30 glass border-b border-border/50">
         <div className="px-4 py-3 flex items-center gap-3">
-          <Link 
-            href="/about" 
+          <button
+            onClick={() => router.back()}
             className="w-9 h-9 rounded-full bg-secondary/80 flex items-center justify-center hover:bg-secondary transition-colors"
+            aria-label="back"
           >
             <ChevronLeft className="w-5 h-5 text-foreground" />
-          </Link>
+          </button>
           <h1 className="flex-1 text-lg font-bold text-center text-foreground">{t('mascot.title')}</h1>
           <LanguageToggle compact />
         </div>

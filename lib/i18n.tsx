@@ -86,6 +86,12 @@ const translations: Record<Language, Record<string, string>> = {
     'shop.services': '제공 서비스',
     'shop.priceRange': '가격대',
     'shop.referenceImages': '참고 이미지',
+    'shop.reserveNaver': '네이버 예약하기',
+    'shop.reservePhone': '전화로 예약·문의',
+    'shop.viewNaverMap': '네이버 지도에서 보기',
+    'shop.copyPhone': '전화번호 복사',
+    'shop.copied': '복사됨',
+    'shop.naverMapShort': '네이버 지도',
 
     // 지도
     'map.title': '토템 지도',
@@ -120,6 +126,9 @@ const translations: Record<Language, Record<string, string>> = {
     'about.hoursNote': '각 공방별 운영 시간이 다를 수 있으니 방문 전 확인해주세요.',
     'about.makeReservation': '체험 예약하기',
     'about.touchSuwonEasy': '터치수원 앱에서 간편하게',
+    'about.mapCtaTitle': '공방거리 길찾기',
+    'about.mapCtaDesc': '네이버 지도로 행궁동 공방거리를 확인하세요',
+    'about.mapCtaButton': '네이버 지도에서 보기',
 
     // 마스코트
     'mascot.title': '마스코트 소개',
@@ -191,6 +200,20 @@ const translations: Record<Language, Record<string, string>> = {
     'login.logout': '로그아웃',
     'login.welcome': '환영합니다!',
     'login.loggedInAs': '로그인됨',
+
+    // 이용 안내(온보딩)
+    'guide.open': '이용 안내',
+    'guide.title': '공방거리 스탬프 투어',
+    'guide.subtitle': '행궁동 공방거리를 즐기는 방법',
+    'guide.step1Title': '토템을 찾으세요',
+    'guide.step1Desc': '공방거리 곳곳과 가게 앞에 놓인 토템(조형물)을 찾아보세요.',
+    'guide.step2Title': 'NFC 태깅',
+    'guide.step2Desc': '스마트폰을 토템에 갖다 대면 해당 공방 페이지가 자동으로 열려요.',
+    'guide.step3Title': '스탬프 수집',
+    'guide.step3Desc': '방문한 공방의 스탬프가 자동으로 모이고, 컬러로 채워집니다.',
+    'guide.step4Title': '지도·마스코트',
+    'guide.step4Desc': '지도에서 위치를 확인하고, 입구(0번)를 누르면 대표 마스코트를 만나요.',
+    'guide.start': '시작하기',
   },
   en: {
     // 공통
@@ -264,6 +287,12 @@ const translations: Record<Language, Record<string, string>> = {
     'shop.services': 'Services',
     'shop.priceRange': 'Price Range',
     'shop.referenceImages': 'Photos',
+    'shop.reserveNaver': 'Book on Naver',
+    'shop.reservePhone': 'Call to Book / Ask',
+    'shop.viewNaverMap': 'View on Naver Map',
+    'shop.copyPhone': 'Copy Phone',
+    'shop.copied': 'Copied',
+    'shop.naverMapShort': 'Naver Map',
 
     // 지도
     'map.title': 'Totem Map',
@@ -298,6 +327,9 @@ const translations: Record<Language, Record<string, string>> = {
     'about.hoursNote': 'Hours may vary by workshop. Please check before visiting.',
     'about.makeReservation': 'Make a Reservation',
     'about.touchSuwonEasy': 'Easy booking via Touch Suwon app',
+    'about.mapCtaTitle': 'Find Craft Street',
+    'about.mapCtaDesc': 'See Haenggung-dong Craft Street on Naver Map',
+    'about.mapCtaButton': 'View on Naver Map',
 
     // 마스코트
     'mascot.title': 'Mascot Guide',
@@ -369,6 +401,20 @@ const translations: Record<Language, Record<string, string>> = {
     'login.logout': 'Logout',
     'login.welcome': 'Welcome!',
     'login.loggedInAs': 'Logged in as',
+
+    // Onboarding guide
+    'guide.open': 'How to Use',
+    'guide.title': 'Craft Street Stamp Tour',
+    'guide.subtitle': 'How to enjoy Haenggung-dong Craft Street',
+    'guide.step1Title': 'Find the Totems',
+    'guide.step1Desc': 'Look for totems (sculptures) along the street and in front of shops.',
+    'guide.step2Title': 'Tap NFC',
+    'guide.step2Desc': 'Tap your phone on a totem and the shop page opens automatically.',
+    'guide.step3Title': 'Collect Stamps',
+    'guide.step3Desc': 'Stamps for visited shops are collected automatically and turn to color.',
+    'guide.step4Title': 'Map & Mascot',
+    'guide.step4Desc': 'Check locations on the map, and tap the entrance (0) to meet the mascot.',
+    'guide.start': 'Get Started',
   }
 }
 

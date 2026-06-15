@@ -4,9 +4,8 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { Button } from '@/components/ui/button'
 import { useI18n } from '@/lib/i18n'
-import { TOUCH_SUWON_LINK } from '@/lib/data'
 import { LanguageToggle } from '@/components/language-toggle'
-import { MapPin, Clock, ChevronRight, Smartphone, Navigation } from 'lucide-react'
+import { MapPin, Clock, ChevronRight, Navigation } from 'lucide-react'
 
 export default function AboutPage() {
   const { t } = useI18n()
@@ -141,24 +140,24 @@ export default function AboutPage() {
           </p>
         </section>
 
-        {/* 터치수원 연결 */}
+        {/* 네이버 지도 연결 */}
         <section className="bg-gradient-to-br from-primary/8 to-primary/4 rounded-[14px] p-5 animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
           <div className="flex items-center gap-3 mb-4">
             <div className="w-10 h-10 rounded-[14px] bg-primary/15 flex items-center justify-center">
-              <Smartphone className="w-5 h-5 text-primary" />
+              <MapPin className="w-5 h-5 text-primary" />
             </div>
             <div>
-              <h3 className="text-title-md text-foreground">{t('about.makeReservation')}</h3>
-              <p className="text-badge text-muted-foreground">{t('about.touchSuwonEasy')}</p>
+              <h3 className="text-title-md text-foreground">{t('about.mapCtaTitle')}</h3>
+              <p className="text-badge text-muted-foreground">{t('about.mapCtaDesc')}</p>
             </div>
           </div>
           <a
-            href={TOUCH_SUWON_LINK}
+            href="https://map.naver.com/p/search/수원 행궁동 공방거리"
             target="_blank"
             rel="noopener noreferrer"
           >
             <Button className="w-full h-12 text-body-md rounded-[8px]">
-              {t('touchSuwon.goTo')}
+              {t('about.mapCtaButton')}
             </Button>
           </a>
         </section>

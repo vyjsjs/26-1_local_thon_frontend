@@ -63,13 +63,6 @@ export function StampGrid({
                   </div>
                 )}
               </div>
-              <span className={cn(
-                'text-center line-clamp-1 transition-colors',
-                compact ? 'text-badge' : 'text-caption-sm',
-                isCollected ? 'text-foreground font-medium' : 'text-muted-foreground'
-              )}>
-                {lang === 'en' ? shop.nameEn : shop.name}
-              </span>
             </Link>
           )
         })}

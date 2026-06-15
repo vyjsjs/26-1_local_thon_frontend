@@ -9,7 +9,7 @@ import { notFound } from 'next/navigation'
 import { SHOPS, getShopByNfcId } from '@/lib/data'
 import { useStamps } from '@/hooks/use-stamps'
 import { useI18n } from '@/lib/i18n'
-import { TouchSuwonButton } from '@/components/touch-suwon-button'
+import { ReservationButton } from '@/components/reservation-button'
 import { LanguageToggle } from '@/components/language-toggle'
 import { cn } from '@/lib/utils'
 import {
@@ -82,9 +82,9 @@ function ShopContent({ id }: { id: string }) {
 
   return (
     <div className="min-h-screen pb-28 bg-background">
-      <div className="max-w-md mx-auto">
-        {/* 커버 영역 */}
-        <div className="relative h-56 w-full overflow-hidden bg-gradient-to-br from-secondary via-accent to-secondary">
+      <div className="max-w-md mx-auto relative">
+        {/* 커버 영역 — sticky 패럴랙스: 스크롤하면 아래 시트가 위로 덮으며 사진이 가려짐 */}
+        <div className="sticky top-0 z-0 h-72 w-full overflow-hidden bg-gradient-to-br from-secondary via-accent to-secondary">
           {coverImage ? (
             <Image
               src={coverImage}
@@ -130,9 +130,9 @@ function ShopContent({ id }: { id: string }) {
           </div>
         </div>
 
-        <div className="px-4 pb-6 space-y-5">
+        <div className="relative z-10 -mt-10 rounded-t-[28px] bg-background px-4 pt-4 pb-6 space-y-5 shadow-[0_-12px_30px_-12px_rgba(0,0,0,0.18)]">
           {/* 1. 마스코트 + 가게명 + 설명 (커버 위로 끌어올린 카드) */}
-          <section className="-mt-12 relative animate-fade-in-up">
+          <section className="-mt-16 relative animate-fade-in-up">
             <div className="flex items-end gap-4">
               <div className={cn(
                 'relative w-24 h-24 rounded-[18px] overflow-hidden shadow-lg flex-shrink-0 border-4 border-background bg-card transition-all',
@@ -305,20 +305,7 @@ function ShopContent({ id }: { id: string }) {
       {/* 하단 고정 버튼 */}
       <div className="fixed bottom-16 left-0 right-0 z-40 glass border-t border-border">
         <div className="max-w-md mx-auto px-4 py-4">
-          {shop.hasExperience ? (
-            <TouchSuwonButton shopId={shop.id} className="w-full" />
-          ) : (
-            <div className="text-center">
-              <p className="text-body-sm text-muted-foreground mb-2">{t('shop.noExperienceBottom')}</p>
-              <Link
-                href="/stamps"
-                className="inline-flex items-center gap-1 text-primary text-caption hover:text-primary/80 transition-colors"
-              >
-                {t('shop.browseOther')}
-                <ChevronLeft className="w-4 h-4 rotate-180" />
-              </Link>
-            </div>
-          )}
+          <ReservationButton shop={shop} className="w-full" />
         </div>
       </div>
     </div>

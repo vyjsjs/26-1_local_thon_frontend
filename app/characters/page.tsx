@@ -5,9 +5,9 @@ import { useI18n } from '@/lib/i18n'
 import { SHOPS } from '@/lib/data'
 import { LanguageToggle } from '@/components/language-toggle'
 import { BottomNav } from '@/components/bottom-nav'
+import { MascotAura } from '@/components/mascot-image'
 import { ArrowLeft, Check } from 'lucide-react'
 import Link from 'next/link'
-import Image from 'next/image'
 
 export default function CharactersPage() {
   const { stamps, collectedCount, isLoading } = useStamps()
@@ -77,31 +77,14 @@ export default function CharactersPage() {
                   className="group"
                   style={{ animationDelay: `${index * 0.03}s` }}
                 >
-                  <div className="relative">
-                    <div className={`
-                      aspect-square rounded-[14px] overflow-hidden bg-secondary border-2 transition-all
-                      ${isCollected 
-                        ? 'border-primary' 
-                        : 'border-transparent'
-                      }
-                      group-hover:scale-[1.02] group-active:scale-[0.98]
-                    `}>
-                      <Image
-                        src={shop.mascotImage}
-                        alt={lang === 'en' ? shop.nameEn : shop.name}
-                        width={120}
-                        height={120}
-                        className={`w-full h-full object-cover transition-all ${
-                          isCollected ? '' : 'stamp-uncollected'
-                        }`}
-                      />
-                    </div>
-                    {isCollected && (
-                      <div className="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-primary flex items-center justify-center shadow-sm">
-                        <Check className="w-3 h-3 text-primary-foreground" strokeWidth={3} />
-                      </div>
-                    )}
-                  </div>
+                  <MascotAura
+                    src={shop.mascotImage}
+                    alt={lang === 'en' ? shop.nameEn : shop.name}
+                    collected={!!isCollected}
+                    showBadge
+                    sizes="120px"
+                    className="w-full aspect-square transition-transform group-hover:scale-[1.03] group-active:scale-[0.98]"
+                  />
                   <p className="mt-2 text-caption-sm font-medium text-foreground text-center line-clamp-1">
                     {lang === 'en' ? shop.nameEn : shop.name}
                   </p>

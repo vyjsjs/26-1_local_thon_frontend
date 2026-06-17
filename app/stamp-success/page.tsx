@@ -8,7 +8,7 @@ import { useI18n } from '@/lib/i18n'
 import { SHOPS, getDemoUserId } from '@/lib/data'
 import { Button } from '@/components/ui/button'
 import { Check, Sparkles, Trophy } from 'lucide-react'
-import Image from 'next/image'
+import { MascotAura } from '@/components/mascot-image'
 import Link from 'next/link'
 import { Suspense } from 'react'
 
@@ -71,22 +71,20 @@ function StampSuccessContent() {
 
       {/* 콘텐츠 */}
       <div className="flex-1 flex flex-col items-center justify-center px-6 py-12">
-        {/* 마스코트 이미지 */}
+        {/* 마스코트 이미지 — 배경 없이 아우라 글로우 */}
         <div className="relative mb-8 animate-bounce-in">
-          <div className="w-40 h-40 rounded-[20px] overflow-hidden bg-card shadow-lg border border-border">
-            <Image
-              src={shop.mascotImage}
-              alt={lang === 'en' ? shop.nameEn : shop.name}
-              width={160}
-              height={160}
-              className="w-full h-full object-cover"
-              priority
-            />
-          </div>
-          <div className="absolute -bottom-3 -right-3 w-12 h-12 rounded-full bg-primary flex items-center justify-center shadow-lg animate-bounce">
+          <MascotAura
+            src={shop.mascotImage}
+            alt={lang === 'en' ? shop.nameEn : shop.name}
+            collected
+            priority
+            sizes="176px"
+            className="w-44 h-44"
+          />
+          <div className="absolute -bottom-1 -right-1 w-12 h-12 rounded-full bg-primary flex items-center justify-center shadow-lg animate-bounce z-[3]">
             <Check className="w-6 h-6 text-primary-foreground" strokeWidth={2.5} />
           </div>
-          <div className="absolute -top-2 -left-2 w-8 h-8 rounded-full bg-[#ffb400] flex items-center justify-center shadow-md">
+          <div className="absolute -top-1 -left-1 w-8 h-8 rounded-full bg-[#ffb400] flex items-center justify-center shadow-md z-[3]">
             <Sparkles className="w-4 h-4 text-[#7a5200]" />
           </div>
         </div>

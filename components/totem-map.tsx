@@ -6,7 +6,7 @@ import { SHOPS } from '@/lib/data'
 import { cn } from '@/lib/utils'
 import { useI18n } from '@/lib/i18n'
 import Link from 'next/link'
-import Image from 'next/image'
+import { MascotAura } from '@/components/mascot-image'
 import { Check } from 'lucide-react'
 
 interface TotemMapProps {
@@ -22,19 +22,20 @@ const VIEW = { w: 360, h: 480 }
 // 가게/입구 토템의 지도상 위치 (구글맵 실제 배치 기준)
 const MAP_POS: Record<string, { x: number; y: number }> = {
   entrance: { x: 200, y: 70 },   // 행궁로 북단 (0번 = 대표 마스코트 토템)
+  // id = 표시순서(입구 가까운 순). 좌표는 실제 위치 고정.
   'shop-1': { x: 203, y: 150 },  // 경애공방
-  'shop-2': { x: 178, y: 196 },  // 영화당
-  'shop-3': { x: 80, y: 214 },   // 장금이 공방 (행궁로26번길)
-  'shop-4': { x: 210, y: 300 },  // 갤러리풍경
-  'shop-5': { x: 210, y: 196 },  // 나녕공방
-  'shop-6': { x: 236, y: 278 },  // 카페레퓨즈
-  'shop-7': { x: 256, y: 348 },  // 막걸리계보
-  'shop-8': { x: 243, y: 176 },  // 꽃을 담다, 종이노리
-  'shop-9': { x: 243, y: 202 },  // 향기도예
-  'shop-10': { x: 210, y: 240 }, // 스튜디오 로티니
-  'shop-11': { x: 205, y: 170 }, // 행궁다과
-  'shop-12': { x: 284, y: 236 }, // 이춘섭 명인 전통복식연구소
-  'shop-13': { x: 236, y: 304 }, // 메리골드
+  'shop-2': { x: 205, y: 170 },  // 행궁다과
+  'shop-3': { x: 243, y: 176 },  // 꽃을 담다, 종이노리
+  'shop-4': { x: 210, y: 196 },  // 나녕공방
+  'shop-5': { x: 178, y: 196 },  // 영화당
+  'shop-6': { x: 243, y: 202 },  // 향기도예
+  'shop-7': { x: 210, y: 240 },  // 스튜디오 로티니
+  'shop-8': { x: 284, y: 236 },  // 이춘섭 명인 전통복식연구소
+  'shop-9': { x: 80, y: 214 },   // 장금이 공방 (행궁로26번길)
+  'shop-10': { x: 236, y: 278 }, // 카페레퓨즈
+  'shop-11': { x: 210, y: 300 }, // 갤러리풍경
+  'shop-12': { x: 236, y: 304 }, // 메리골드
+  'shop-13': { x: 256, y: 348 }, // 막걸리계보
 }
 
 // 녹지(화성행궁 일대 공원) — 좌측/좌상단
@@ -172,18 +173,13 @@ export function TotemMap({ stamps = {}, className, onTotemClick }: TotemMapProps
         <div className="absolute bottom-3 left-3 right-3 animate-slide-up">
           <Link href={`/shop/${selectedShop.id}`}>
             <div className="bg-card rounded-xl p-3 shadow-lg border border-border flex items-center gap-3">
-              <div className={cn(
-                'w-12 h-12 rounded-lg overflow-hidden flex-shrink-0',
-                !stamps[selectedShop.id]?.isCollected && 'opacity-50 grayscale'
-              )}>
-                <Image
-                  src={selectedShop.mascotImage}
-                  alt={lang === 'en' ? selectedShop.nameEn : selectedShop.name}
-                  width={48}
-                  height={48}
-                  className="w-full h-full object-cover"
-                />
-              </div>
+              <MascotAura
+                src={selectedShop.mascotImage}
+                alt={lang === 'en' ? selectedShop.nameEn : selectedShop.name}
+                collected={!!stamps[selectedShop.id]?.isCollected}
+                sizes="48px"
+                className="w-12 h-12 flex-shrink-0"
+              />
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-1.5 mb-0.5">
                   <span className={cn(
@@ -258,18 +254,13 @@ export function TotemListMap({ stamps = {}, className }: TotemListMapProps) {
             >
               {index + 1}
             </div>
-            <div className={cn(
-              'w-10 h-10 rounded-lg overflow-hidden flex-shrink-0',
-              !isCollected && 'grayscale opacity-50'
-            )}>
-              <Image
-                src={shop.mascotImage}
-                alt={lang === 'en' ? shop.nameEn : shop.name}
-                width={40}
-                height={40}
-                className="w-full h-full object-cover"
-              />
-            </div>
+            <MascotAura
+              src={shop.mascotImage}
+              alt={lang === 'en' ? shop.nameEn : shop.name}
+              collected={isCollected}
+              sizes="40px"
+              className="w-10 h-10 flex-shrink-0"
+            />
             <div className="flex-1 min-w-0">
               <p className={cn(
                 'font-medium text-sm truncate',

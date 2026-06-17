@@ -4,6 +4,75 @@ import Image from 'next/image'
 import { cn } from '@/lib/utils'
 import { Check } from 'lucide-react'
 
+interface MascotAuraProps {
+  src: string
+  alt: string
+  /** 획득 시 컬러 + 아우라, 미획득 시 회색 실루엣 (배경/박스 없음) */
+  collected?: boolean
+  showBadge?: boolean
+  badgeSize?: 'sm' | 'md' | 'lg'
+  /** 획득 순간 통통 튀는 애니메이션 */
+  animate?: boolean
+  priority?: boolean
+  sizes?: string
+  /** 캐릭터 박스 크기는 호출부에서 className(w-/h-/aspect-)으로 지정 */
+  className?: string
+}
+
+/**
+ * 배경(박스) 없이 캐릭터만 보여주고, 스탬프 획득 시 부드러운 아우라 글로우를 두른다.
+ * 미획득 시에는 아우라 없이 회색 실루엣으로 표시 (컬러는 획득 시에만).
+ * 마스코트 PNG는 모두 투명 배경이므로 object-contain으로 잘림 없이 노출된다.
+ */
+export function MascotAura({
+  src,
+  alt,
+  collected = true,
+  showBadge = false,
+  badgeSize = 'md',
+  animate = false,
+  priority = false,
+  sizes = '128px',
+  className,
+}: MascotAuraProps) {
+  const badgeBox = { sm: 'w-4 h-4', md: 'w-5 h-5', lg: 'w-7 h-7' }[badgeSize]
+  const badgeIcon = { sm: 'w-2.5 h-2.5', md: 'w-3 h-3', lg: 'w-4 h-4' }[badgeSize]
+
+  return (
+    <div
+      className={cn(
+        'relative flex items-center justify-center',
+        collected && 'mascot-aura',
+        collected && animate && 'mascot-aura-animate',
+        className,
+      )}
+    >
+      <Image
+        src={src}
+        alt={alt}
+        fill
+        sizes={sizes}
+        priority={priority}
+        className={cn(
+          'relative z-[1] object-contain transition-all duration-300',
+          collected ? 'drop-shadow-[0_4px_10px_rgba(0,0,0,0.14)]' : 'mascot-dim',
+          collected && animate && 'animate-stamp-collect',
+        )}
+      />
+      {collected && showBadge && (
+        <div
+          className={cn(
+            'absolute z-[2] -bottom-1 -right-1 flex items-center justify-center rounded-full bg-primary shadow-md',
+            badgeBox,
+          )}
+        >
+          <Check className={cn('text-primary-foreground', badgeIcon)} strokeWidth={3} />
+        </div>
+      )}
+    </div>
+  )
+}
+
 interface MascotImageProps {
   src: string
   alt: string

@@ -7,6 +7,7 @@ import Image from 'next/image'
 import { useStamps } from '@/hooks/use-stamps'
 import { useI18n } from '@/lib/i18n'
 import { StampGrid, StampProgress } from '@/components/stamp-grid'
+import { MascotAura } from '@/components/mascot-image'
 import { LanguageToggle } from '@/components/language-toggle'
 import { GuideModal } from '@/components/guide-modal'
 import { SHOPS, getShopByNfcId } from '@/lib/data'
@@ -262,17 +263,14 @@ export function HomeContent() {
                 href={`/shop/${shop.id}`}
                 className="flex-shrink-0 w-[100px]"
               >
-                <div className="w-[100px] h-[100px] rounded-[14px] overflow-hidden bg-muted mb-2 shadow-sm">
-                  <Image
-                    src={shop.mascotImage}
-                    alt={lang === 'en' ? shop.nameEn : shop.name}
-                    width={100}
-                    height={100}
-                    className={`w-full h-full object-cover transition-all ${
-                      stamps[shop.id]?.isCollected ? '' : 'stamp-uncollected'
-                    }`}
-                  />
-                </div>
+                <MascotAura
+                  src={shop.mascotImage}
+                  alt={lang === 'en' ? shop.nameEn : shop.name}
+                  collected={!!stamps[shop.id]?.isCollected}
+                  showBadge
+                  sizes="100px"
+                  className="w-[100px] h-[100px] mb-2"
+                />
                 <p className="text-caption-sm font-medium text-foreground text-center line-clamp-1">
                   {lang === 'en' ? shop.nameEn : shop.name}
                 </p>

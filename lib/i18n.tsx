@@ -132,13 +132,15 @@ const translations: Record<Language, Record<string, string>> = {
 
     // 마스코트
     'mascot.title': '마스코트 소개',
+    'mascot.mascotName': '정냥이',
     'mascot.mainMascot': '공방거리 마스코트',
-    'mascot.mainDesc': '수원 공방거리의 대표 마스코트입니다. 각 공방마다 특색 있는 변형 마스코트가 있어요!',
+    'mascot.mainDesc': "행궁동이 그리워 고양이로 환생한 조선의 왕 '정냥이'! 역사와 예술이 살아 숨 쉬는 행궁동 공방 골목으로 그대를 초대하오.",
+    'mascot.storyTitle': '정냥이 이야기',
+    'mascot.story': "예술과 문화를 사랑한 조선의 왕, 정조. 행궁동 공방거리의 온기가 그리워 현대의 귀여운 길고양이 '정냥이'로 환생했습니다.\n\n평범한 골목 고양이 같지만, 붉은 곤룡포와 근엄한 표정! 공방거리의 묘왕(猫王)과 함께 역사와 예술이 살아 숨 쉬는 특별한 로컬 예술 여행을 시작해 보세요.",
     'mascot.whatIsTotem': '토템이란?',
     'mascot.totemDesc': '공방거리 곳곳에 설치된 3D 조형물로, 마스코트를 형상화했습니다. 각 토템에는 NFC 태그가 내장되어 있어, 스마트폰으로 태깅하면 해당 공방의 정보와 스탬프를 획득할 수 있습니다.',
     'mascot.byShop': '공방별 마스코트',
-    'mascot.designCredit': '마스코트 디자인: 추후 업데이트 예정',
-    'mascot.placeholderNote': '현재 표시된 이미지는 플레이스홀더입니다',
+    'mascot.designCredit': '공방별 마스코트는 정냥이가 각 공방의 색을 입은 변형 캐릭터예요.',
     'mascot.startTour': '스탬프 투어 시작하기',
 
     // 터치수원
@@ -333,13 +335,15 @@ const translations: Record<Language, Record<string, string>> = {
 
     // 마스코트
     'mascot.title': 'Mascot Guide',
+    'mascot.mascotName': 'Jeongnyangi',
     'mascot.mainMascot': 'Craft Street Mascot',
-    'mascot.mainDesc': 'The main mascot of Suwon Craft Street. Each workshop has its own unique mascot variation!',
+    'mascot.mainDesc': 'Jeongnyangi — a Joseon king reborn as a cat, longing for Haenggung-dong! Let me invite you to the craft alleys where history and art come alive.',
+    'mascot.storyTitle': "Jeongnyangi's Story",
+    'mascot.story': 'King Jeongjo of Joseon loved art and culture. Missing the warmth of Haenggung-dong Craft Street, he was reborn as a cute modern alley cat, "Jeongnyangi."\n\nHe may look like an ordinary alley cat, but note the red royal robe and dignified face! Begin a special local art journey where history and art breathe, together with the Cat King of Craft Street.',
     'mascot.whatIsTotem': 'What is a Totem?',
     'mascot.totemDesc': '3D sculptures installed throughout Craft Street, representing the mascots. Each totem has an embedded NFC tag that lets you get workshop info and collect stamps by tapping with your phone.',
     'mascot.byShop': 'Mascots by Workshop',
-    'mascot.designCredit': 'Mascot design: Coming soon',
-    'mascot.placeholderNote': 'Current images are placeholders',
+    'mascot.designCredit': 'Each workshop mascot is Jeongnyangi reimagined in the colors of that workshop.',
     'mascot.startTour': 'Start Stamp Tour',
 
     // 터치수원

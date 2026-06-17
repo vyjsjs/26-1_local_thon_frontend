@@ -11,6 +11,7 @@ import { useStamps } from '@/hooks/use-stamps'
 import { useI18n } from '@/lib/i18n'
 import { ReservationButton } from '@/components/reservation-button'
 import { LanguageToggle } from '@/components/language-toggle'
+import { MascotAura } from '@/components/mascot-image'
 import { cn } from '@/lib/utils'
 import {
   ChevronLeft, MapPin, Clock, Check, Sparkles,
@@ -76,7 +77,7 @@ function ShopContent({ id }: { id: string }) {
   ].filter(Boolean) as { icon: typeof Phone; label: string; value: string }[]
 
   const referenceImages = shop.referenceImages ?? []
-  const coverImage = referenceImages[0]
+  const coverImage = shop.coverImage ?? referenceImages[0]
   // 참고 이미지가 아직 없을 때도 레이아웃이 보이도록 플레이스홀더 타일 노출
   const galleryTiles = referenceImages.length > 0 ? referenceImages : [null, null, null, null]
 
@@ -134,25 +135,17 @@ function ShopContent({ id }: { id: string }) {
           {/* 1. 마스코트 + 가게명 + 설명 (커버 위로 끌어올린 카드) */}
           <section className="-mt-16 relative animate-fade-in-up">
             <div className="flex items-end gap-4">
-              <div className={cn(
-                'relative w-24 h-24 rounded-[18px] overflow-hidden shadow-lg flex-shrink-0 border-4 border-background bg-card transition-all',
-                justCollected && 'animate-stamp-collect animate-stamp-glow',
-                collected ? 'ring-2 ring-primary' : ''
-              )}>
-                <Image
-                  src={shop.mascotImage}
-                  alt={`${shopName} ${lang === 'en' ? 'mascot' : '마스코트'}`}
-                  width={96}
-                  height={96}
-                  className={cn('w-full h-full object-cover', !collected && 'grayscale opacity-70')}
-                  priority
-                />
-                {collected && (
-                  <div className="absolute bottom-0.5 right-0.5 w-6 h-6 rounded-full bg-primary flex items-center justify-center shadow-md">
-                    <Check className="w-3.5 h-3.5 text-primary-foreground" strokeWidth={3} />
-                  </div>
-                )}
-              </div>
+              <MascotAura
+                src={shop.mascotImage}
+                alt={`${shopName} ${lang === 'en' ? 'mascot' : '마스코트'}`}
+                collected={collected}
+                animate={justCollected}
+                showBadge
+                badgeSize="lg"
+                priority
+                sizes="96px"
+                className="w-24 h-24 flex-shrink-0"
+              />
               <div className="flex-1 min-w-0 pb-1">
                 <span className={cn(
                   'inline-flex items-center gap-1 px-2 py-0.5 rounded-[4px] text-badge mb-1.5',
@@ -276,18 +269,14 @@ function ShopContent({ id }: { id: string }) {
                 const otherCollected = isCollected(otherShop.id)
                 return (
                   <Link key={otherShop.id} href={`/shop/${otherShop.id}`} className="flex-shrink-0 w-24">
-                    <div className={cn(
-                      'w-20 h-20 mx-auto rounded-[14px] overflow-hidden mb-2 transition-all',
-                      otherCollected ? 'ring-2 ring-primary ring-offset-2 ring-offset-background' : 'opacity-60'
-                    )}>
-                      <Image
-                        src={otherShop.mascotImage}
-                        alt={lang === 'en' ? otherShop.nameEn : otherShop.name}
-                        width={80}
-                        height={80}
-                        className={cn('w-full h-full object-cover', !otherCollected && 'grayscale')}
-                      />
-                    </div>
+                    <MascotAura
+                      src={otherShop.mascotImage}
+                      alt={lang === 'en' ? otherShop.nameEn : otherShop.name}
+                      collected={otherCollected}
+                      showBadge
+                      sizes="80px"
+                      className="w-20 h-20 mx-auto mb-2"
+                    />
                     <p className="text-caption-sm font-medium text-center text-foreground line-clamp-1">
                       {lang === 'en' ? otherShop.nameEn : otherShop.name}
                     </p>

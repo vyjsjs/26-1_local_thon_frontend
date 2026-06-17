@@ -2,13 +2,13 @@
 
 import { useState, useCallback, useEffect, Suspense } from 'react'
 import { useRouter } from 'next/navigation'
-import Image from 'next/image'
 import Link from 'next/link'
 import { SHOPS, getDemoUserId, type Shop } from '@/lib/data'
 import { useStamps } from '@/hooks/use-stamps'
 import { useDemoMode } from '@/lib/demo-mode'
 import { useI18n } from '@/lib/i18n'
 import { StampProgress } from '@/components/stamp-grid'
+import { MascotAura } from '@/components/mascot-image'
 import { LanguageToggle } from '@/components/language-toggle'
 import { cn } from '@/lib/utils'
 import { Nfc, RotateCcw, ChevronLeft, Check, Sparkles } from 'lucide-react'
@@ -112,18 +112,13 @@ function DemoContent() {
                   )}
                 >
                   {/* 마스코트 이미지 */}
-                  <div className="w-full aspect-square rounded-[10px] overflow-hidden mb-2.5 bg-muted">
-                    <Image
-                      src={shop.mascotImage}
-                      alt={lang === 'en' ? shop.nameEn : shop.name}
-                      width={120}
-                      height={120}
-                      className={cn(
-                        'w-full h-full object-cover transition-all',
-                        !collected && 'grayscale opacity-60'
-                      )}
-                    />
-                  </div>
+                  <MascotAura
+                    src={shop.mascotImage}
+                    alt={lang === 'en' ? shop.nameEn : shop.name}
+                    collected={collected}
+                    sizes="120px"
+                    className="w-full aspect-square mb-2.5"
+                  />
 
                   {/* 가게 정보 */}
                   <p className="text-caption text-foreground truncate">
@@ -174,15 +169,14 @@ function DemoContent() {
             </div>
 
             {/* 마스코트 */}
-            <div className="w-20 h-20 mx-auto rounded-[14px] overflow-hidden mb-4 shadow-lg border-2 border-primary/20">
-              <Image
-                src={tappingShop.mascotImage}
-                alt={lang === 'en' ? tappingShop.nameEn : tappingShop.name}
-                width={80}
-                height={80}
-                className="w-full h-full object-cover"
-              />
-            </div>
+            <MascotAura
+              src={tappingShop.mascotImage}
+              alt={lang === 'en' ? tappingShop.nameEn : tappingShop.name}
+              collected
+              animate
+              sizes="80px"
+              className="w-20 h-20 mx-auto mb-4"
+            />
             <p className="text-title-md text-foreground">
               {lang === 'en' ? tappingShop.nameEn : tappingShop.name}
             </p>

@@ -1,11 +1,10 @@
 'use client'
 
 import Link from 'next/link'
-import Image from 'next/image'
 import { cn } from '@/lib/utils'
 import { useI18n } from '@/lib/i18n'
 import { type Shop } from '@/lib/data'
-import { Check } from 'lucide-react'
+import { MascotAura } from '@/components/mascot-image'
 
 interface StampGridProps {
   shops: Shop[]
@@ -38,31 +37,17 @@ export function StampGrid({
               href={`/shop/${shop.id}`}
               className="group flex flex-col items-center gap-1.5"
             >
-              <div className="relative">
-                <div className={cn(
-                  'rounded-[14px] overflow-hidden transition-all duration-200',
+              <MascotAura
+                src={shop.mascotImage}
+                alt={lang === 'en' ? shop.nameEn : shop.name}
+                collected={isCollected}
+                showBadge
+                sizes="64px"
+                className={cn(
+                  'transition-transform duration-200 group-active:scale-95',
                   compact ? 'w-14 h-14' : 'w-16 h-16',
-                  isCollected 
-                    ? 'ring-2 ring-primary ring-offset-2 ring-offset-background' 
-                    : 'opacity-50'
-                )}>
-                  <Image
-                    src={shop.mascotImage}
-                    alt={lang === 'en' ? shop.nameEn : shop.name}
-                    width={64}
-                    height={64}
-                    className={cn(
-                      'w-full h-full object-cover transition-all',
-                      isCollected ? '' : 'grayscale'
-                    )}
-                  />
-                </div>
-                {isCollected && (
-                  <div className="absolute -bottom-1 -right-1 w-5 h-5 rounded-full bg-primary flex items-center justify-center shadow-sm">
-                    <Check className="w-3 h-3 text-primary-foreground" strokeWidth={3} />
-                  </div>
                 )}
-              </div>
+              />
             </Link>
           )
         })}
@@ -131,28 +116,14 @@ export function StampCard({ shop, isCollected, showDetails = false, className }:
     >
       <div className="p-4">
         <div className="flex items-center gap-3">
-          <div className="relative">
-            <div className={cn(
-              'w-16 h-16 rounded-[14px] overflow-hidden transition-all',
-              isCollected ? 'ring-2 ring-primary ring-offset-2 ring-offset-card' : 'opacity-50'
-            )}>
-              <Image
-                src={shop.mascotImage}
-                alt={lang === 'en' ? shop.nameEn : shop.name}
-                width={64}
-                height={64}
-                className={cn(
-                  'w-full h-full object-cover',
-                  isCollected ? '' : 'grayscale'
-                )}
-              />
-            </div>
-            {isCollected && (
-              <div className="absolute -bottom-1 -right-1 w-5 h-5 rounded-full bg-primary flex items-center justify-center">
-                <Check className="w-3 h-3 text-primary-foreground" strokeWidth={3} />
-              </div>
-            )}
-          </div>
+          <MascotAura
+            src={shop.mascotImage}
+            alt={lang === 'en' ? shop.nameEn : shop.name}
+            collected={isCollected}
+            showBadge
+            sizes="64px"
+            className="w-16 h-16 flex-shrink-0"
+          />
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-2 mb-0.5">
               <span className={cn(

@@ -7,6 +7,7 @@ import { SHOPS } from '@/lib/data'
 import { useI18n } from '@/lib/i18n'
 import { Button } from '@/components/ui/button'
 import { LanguageToggle } from '@/components/language-toggle'
+import { MascotAura } from '@/components/mascot-image'
 import { ChevronLeft, Sparkles, Box } from 'lucide-react'
 
 export default function MascotPage() {
@@ -31,24 +32,36 @@ export default function MascotPage() {
       </header>
 
       <div className="px-5 py-6 space-y-5">
-        {/* 메인 마스코트 */}
+        {/* 메인 마스코트 — 간단한 캐릭터 소개 */}
         <section className="relative overflow-hidden bg-gradient-to-br from-primary/10 via-accent/20 to-secondary rounded-2xl p-6 text-center animate-fade-in-up">
-          <div className="w-32 h-32 mx-auto mb-4 animate-float">
+          <div className="w-36 h-36 mx-auto mb-4 animate-float">
             <Image
-              src="/mascots/main-mascot.png"
-              alt={t('mascot.mainMascot')}
-              width={128}
-              height={128}
+              src="/mascots/jeongnyangi-full.png"
+              alt={t('mascot.mascotName')}
+              width={144}
+              height={144}
               className="w-full h-full object-contain drop-shadow-xl"
               priority
             />
           </div>
-          <h2 className="text-xl font-bold text-foreground mb-2">{t('mascot.mainMascot')}</h2>
+          <p className="text-xs font-medium text-primary mb-1">{t('mascot.mainMascot')}</p>
+          <h2 className="text-2xl font-bold text-foreground mb-2.5">{t('mascot.mascotName')}</h2>
           <p className="text-sm text-muted-foreground leading-relaxed max-w-xs mx-auto">
             {t('mascot.mainDesc')}
           </p>
           <div className="absolute -top-4 -right-4 w-20 h-20 rounded-full bg-primary/10 blur-2xl" />
           <div className="absolute -bottom-4 -left-4 w-16 h-16 rounded-full bg-accent/20 blur-xl" />
+        </section>
+
+        {/* 캐릭터 세계관 — 정냥이 이야기 */}
+        <section className="bg-card rounded-2xl p-5 border border-border animate-fade-in-up" style={{ animationDelay: '0.05s' }}>
+          <h3 className="font-semibold text-foreground mb-2 flex items-center gap-2">
+            <Sparkles className="w-4 h-4 text-primary" />
+            {t('mascot.storyTitle')}
+          </h3>
+          <p className="text-sm text-muted-foreground leading-relaxed whitespace-pre-line">
+            {t('mascot.story')}
+          </p>
         </section>
 
         {/* 토템 소개 */}
@@ -88,15 +101,13 @@ export default function MascotPage() {
                 className="bg-card rounded-xl p-4 border border-border card-interactive animate-fade-in-up"
                 style={{ animationDelay: `${0.2 + index * 0.03}s` }}
               >
-                <div className="w-16 h-16 mx-auto mb-3 rounded-xl overflow-hidden bg-secondary/50">
-                  <Image
-                    src={shop.mascotImage}
-                    alt={lang === 'en' ? shop.nameEn : shop.name}
-                    width={64}
-                    height={64}
-                    className="w-full h-full object-cover"
-                  />
-                </div>
+                <MascotAura
+                  src={shop.mascotImage}
+                  alt={lang === 'en' ? shop.nameEn : shop.name}
+                  collected
+                  sizes="64px"
+                  className="w-16 h-16 mx-auto mb-3"
+                />
                 <div className="text-center">
                   <h4 className="font-semibold text-sm text-foreground mb-0.5">
                     {lang === 'en' ? shop.nameEn : shop.name}
@@ -114,9 +125,6 @@ export default function MascotPage() {
         <section className="bg-secondary/50 rounded-xl p-4 text-center animate-fade-in-up" style={{ animationDelay: '0.4s' }}>
           <p className="text-xs text-muted-foreground">
             {t('mascot.designCredit')}
-          </p>
-          <p className="text-[10px] text-muted-foreground/70 mt-0.5">
-            {t('mascot.placeholderNote')}
           </p>
         </section>
 

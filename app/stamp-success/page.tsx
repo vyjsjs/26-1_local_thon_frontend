@@ -7,7 +7,7 @@ import { useDemoMode } from '@/lib/demo-mode'
 import { useI18n } from '@/lib/i18n'
 import { SHOPS, getDemoUserId } from '@/lib/data'
 import { Button } from '@/components/ui/button'
-import { Check, Sparkles, Trophy } from 'lucide-react'
+import { Sparkles, Trophy } from 'lucide-react'
 import { MascotAura } from '@/components/mascot-image'
 import Link from 'next/link'
 import { Suspense } from 'react'
@@ -81,9 +81,6 @@ function StampSuccessContent() {
             sizes="176px"
             className="w-44 h-44"
           />
-          <div className="absolute -bottom-1 -right-1 w-12 h-12 rounded-full bg-primary flex items-center justify-center shadow-lg animate-bounce z-[3]">
-            <Check className="w-6 h-6 text-primary-foreground" strokeWidth={2.5} />
-          </div>
           <div className="absolute -top-1 -left-1 w-8 h-8 rounded-full bg-[#ffb400] flex items-center justify-center shadow-md z-[3]">
             <Sparkles className="w-4 h-4 text-[#7a5200]" />
           </div>

@@ -22,18 +22,16 @@ export default function AboutPage() {
       </header>
 
       <div className="px-4 py-6 space-y-5">
-        {/* 히어로 이미지 */}
-        <section className="relative overflow-hidden rounded-[14px] bg-gradient-to-br from-secondary to-muted aspect-[16/9] animate-fade-in-up">
-          <div className="absolute inset-0 flex items-center justify-center">
-            <div className="text-center text-muted-foreground">
-              <svg className="mx-auto mb-2 opacity-30" width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
-                <circle cx="8.5" cy="8.5" r="1.5" />
-                <polyline points="21 15 16 10 5 21" />
-              </svg>
-              <p className="text-body-sm opacity-50">{t('home.streetPhoto')}</p>
-            </div>
-          </div>
+        {/* 히어로 이미지 — 공방거리 실제 사진 */}
+        <section className="relative overflow-hidden rounded-[14px] bg-muted aspect-[16/9] animate-fade-in-up">
+          <Image
+            src="/street/craft-street.jpg"
+            alt={t('about.craftStreet')}
+            fill
+            priority
+            sizes="(max-width: 448px) 100vw, 448px"
+            className="object-cover"
+          />
           <div className="absolute bottom-0 left-0 right-0 p-5 bg-gradient-to-t from-black/60 to-transparent">
             <p className="text-badge text-white/80 mb-1">{t('about.suwonHaenggung')}</p>
             <h2 className="text-display-sm text-white">{t('about.craftStreet')}</h2>
@@ -57,7 +55,7 @@ export default function AboutPage() {
             <div className="flex items-center gap-4">
               <div className="w-16 h-16 flex-shrink-0">
                 <Image
-                  src="/mascots/main-mascot.png"
+                  src="/mascots/jeongnyangi-face.png"
                   alt={t('about.mascotTitle')}
                   width={64}
                   height={64}

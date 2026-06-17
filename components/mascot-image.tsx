@@ -9,8 +9,8 @@ interface MascotAuraProps {
   alt: string
   /** 획득 시 컬러 + 아우라, 미획득 시 회색 실루엣 (배경/박스 없음) */
   collected?: boolean
-  showBadge?: boolean
-  badgeSize?: 'sm' | 'md' | 'lg'
+  /** 미획득 실루엣 위에 물음표(?) 표시 — 스탬프 페이지 전용 */
+  showQuestion?: boolean
   /** 획득 순간 통통 튀는 애니메이션 */
   animate?: boolean
   priority?: boolean
@@ -20,23 +20,24 @@ interface MascotAuraProps {
 }
 
 /**
- * 배경(박스) 없이 캐릭터만 보여주고, 스탬프 획득 시 부드러운 아우라 글로우를 두른다.
- * 미획득 시에는 아우라 없이 회색 실루엣으로 표시 (컬러는 획득 시에만).
- * 마스코트 PNG는 모두 투명 배경이므로 object-contain으로 잘림 없이 노출된다.
+ * 배경(박스) 없이 캐릭터만 보여준다.
+ * - 획득: 원본 컬러 마스코트 + 부드러운 아우라 글로우.
+ * - 미획득: 가게별 회색 실루엣(`/mascots/sil/*`)만. (컬러는 획득 시에만)
+ *   `showQuestion`이 켜지면(스탬프 페이지) 실루엣 위에 물음표를 얹는다.
+ * 빨간 체크 배지는 표시하지 않는다.
  */
 export function MascotAura({
   src,
   alt,
   collected = true,
-  showBadge = false,
-  badgeSize = 'md',
+  showQuestion = false,
   animate = false,
   priority = false,
   sizes = '128px',
   className,
 }: MascotAuraProps) {
-  const badgeBox = { sm: 'w-4 h-4', md: 'w-5 h-5', lg: 'w-7 h-7' }[badgeSize]
-  const badgeIcon = { sm: 'w-2.5 h-2.5', md: 'w-3 h-3', lg: 'w-4 h-4' }[badgeSize]
+  // 미획득은 가게별 실루엣 이미지 사용 (/mascots/foo.png → /mascots/sil/foo.png)
+  const silSrc = src.replace('/mascots/', '/mascots/sil/')
 
   return (
     <div
@@ -48,26 +49,34 @@ export function MascotAura({
       )}
     >
       <Image
-        src={src}
+        src={collected ? src : silSrc}
         alt={alt}
         fill
         sizes={sizes}
         priority={priority}
         className={cn(
           'relative z-[1] object-contain transition-all duration-300',
-          collected ? 'drop-shadow-[0_4px_10px_rgba(0,0,0,0.14)]' : 'mascot-dim',
+          collected && 'drop-shadow-[0_4px_10px_rgba(0,0,0,0.14)]',
           collected && animate && 'animate-stamp-collect',
         )}
       />
-      {collected && showBadge && (
-        <div
-          className={cn(
-            'absolute z-[2] -bottom-1 -right-1 flex items-center justify-center rounded-full bg-primary shadow-md',
-            badgeBox,
-          )}
+      {!collected && showQuestion && (
+        <svg
+          viewBox="0 0 24 24"
+          aria-hidden
+          className="absolute z-[2] left-[29%] top-[27%] w-[42%] h-[42%] pointer-events-none"
         >
-          <Check className={cn('text-primary-foreground', badgeIcon)} strokeWidth={3} />
-        </div>
+          <text
+            x="12"
+            y="19"
+            textAnchor="middle"
+            fontSize="22"
+            fontWeight="800"
+            fill="#8e949b"
+          >
+            ?
+          </text>
+        </svg>
       )}
     </div>
   )

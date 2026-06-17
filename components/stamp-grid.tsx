@@ -12,6 +12,8 @@ interface StampGridProps {
   maxVisible?: number
   showViewMore?: boolean
   compact?: boolean
+  /** 모든 항목을 스탬프 페이지(/stamps)로 이동시킴 (홈 미리보기용) */
+  linkToStamps?: boolean
   className?: string
 }
 
@@ -21,6 +23,7 @@ export function StampGrid({
   maxVisible,
   showViewMore = false,
   compact = false,
+  linkToStamps = false,
   className,
 }: StampGridProps) {
   const { lang, t } = useI18n()
@@ -34,14 +37,13 @@ export function StampGrid({
           return (
             <Link
               key={shop.id}
-              href={`/shop/${shop.id}`}
+              href={linkToStamps ? '/stamps' : `/shop/${shop.id}`}
               className="group flex flex-col items-center gap-1.5"
             >
               <MascotAura
                 src={shop.mascotImage}
                 alt={lang === 'en' ? shop.nameEn : shop.name}
                 collected={isCollected}
-                showBadge
                 sizes="64px"
                 className={cn(
                   'transition-transform duration-200 group-active:scale-95',
@@ -99,12 +101,14 @@ interface StampCardProps {
   shop: Shop
   isCollected: boolean
   showDetails?: boolean
+  /** 미획득 시 물음표 실루엣 표시 (스탬프 페이지 전용) */
+  showQuestion?: boolean
   className?: string
 }
 
-export function StampCard({ shop, isCollected, showDetails = false, className }: StampCardProps) {
+export function StampCard({ shop, isCollected, showDetails = false, showQuestion = false, className }: StampCardProps) {
   const { lang, t } = useI18n()
-  
+
   return (
     <Link
       href={`/shop/${shop.id}`}
@@ -120,7 +124,7 @@ export function StampCard({ shop, isCollected, showDetails = false, className }:
             src={shop.mascotImage}
             alt={lang === 'en' ? shop.nameEn : shop.name}
             collected={isCollected}
-            showBadge
+            showQuestion={showQuestion}
             sizes="64px"
             className="w-16 h-16 flex-shrink-0"
           />

@@ -140,8 +140,6 @@ function ShopContent({ id }: { id: string }) {
                 alt={`${shopName} ${lang === 'en' ? 'mascot' : '마스코트'}`}
                 collected={collected}
                 animate={justCollected}
-                showBadge
-                badgeSize="lg"
                 priority
                 sizes="96px"
                 className="w-24 h-24 flex-shrink-0"
@@ -273,7 +271,6 @@ function ShopContent({ id }: { id: string }) {
                       src={otherShop.mascotImage}
                       alt={lang === 'en' ? otherShop.nameEn : otherShop.name}
                       collected={otherCollected}
-                      showBadge
                       sizes="80px"
                       className="w-20 h-20 mx-auto mb-2"
                     />

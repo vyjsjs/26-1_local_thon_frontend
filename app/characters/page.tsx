@@ -81,7 +81,6 @@ export default function CharactersPage() {
                     src={shop.mascotImage}
                     alt={lang === 'en' ? shop.nameEn : shop.name}
                     collected={!!isCollected}
-                    showBadge
                     sizes="120px"
                     className="w-full aspect-square transition-transform group-hover:scale-[1.03] group-active:scale-[0.98]"
                   />

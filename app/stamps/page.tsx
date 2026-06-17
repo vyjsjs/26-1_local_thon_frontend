@@ -117,11 +117,12 @@ function StampsContent() {
                 </div>
                 <div className="space-y-2">
                   {SHOPS.filter(shop => !stamps[shop.id]?.isCollected).map((shop) => (
-                    <StampCard 
-                      key={shop.id} 
-                      shop={shop} 
+                    <StampCard
+                      key={shop.id}
+                      shop={shop}
                       isCollected={false}
                       showDetails
+                      showQuestion
                     />
                   ))}
                 </div>
@@ -131,14 +132,14 @@ function StampsContent() {
           
           <TabsContent value="map" className="mt-4 animate-fade-in-up">
             <section className="card-base overflow-hidden shadow-sm">
-              <TotemMap stamps={stamps} />
+              <TotemMap stamps={stamps} showQuestion />
             </section>
             <section className="mt-4">
               <h3 className="text-caption mb-3 text-foreground flex items-center gap-2">
                 <MapPin className="w-4 h-4 text-muted-foreground" />
                 {t('stamps.shopList')}
               </h3>
-              <TotemListMap stamps={stamps} />
+              <TotemListMap stamps={stamps} showQuestion />
             </section>
           </TabsContent>
         </Tabs>

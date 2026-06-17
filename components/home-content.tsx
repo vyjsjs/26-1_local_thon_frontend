@@ -18,6 +18,16 @@ export function HomeContent() {
   const searchParams = useSearchParams()
   const { stamps, collect, collectedCount, totalCount, isLoading } = useStamps()
   const { lang, t } = useI18n()
+
+  // 홈 미리보기: 마스코트가 겹치지 않게 고유 마스코트 우선으로 8개 (최대한 다양한 실루엣 노출)
+  const previewShops = (() => {
+    const seen = new Set<string>()
+    return SHOPS.filter((s) => {
+      if (seen.has(s.mascotImage)) return false
+      seen.add(s.mascotImage)
+      return true
+    }).slice(0, 8)
+  })()
   const [demoTapCount, setDemoTapCount] = useState(0)
   const [showDemoButton, setShowDemoButton] = useState(false)
   const [showGuide, setShowGuide] = useState(false)
@@ -138,7 +148,7 @@ export function HomeContent() {
             </div>
             <div className="w-28 h-28 animate-float flex-shrink-0">
               <Image
-                src="/mascots/main-mascot.png"
+                src="/mascots/jeongnyangi-face.png"
                 alt={lang === 'en' ? 'Craft Street Mascot' : '공방거리 마스코트'}
                 width={112}
                 height={112}
@@ -174,11 +184,12 @@ export function HomeContent() {
             total={totalCount} 
             className="mb-5" 
           />
-          <StampGrid 
-            shops={SHOPS} 
-            stamps={stamps} 
+          <StampGrid
+            shops={previewShops}
+            stamps={stamps}
             maxVisible={8}
             compact
+            linkToStamps
           />
         </section>
 
@@ -215,17 +226,14 @@ export function HomeContent() {
 
         {/* 공방거리 소개 */}
         <section className="card-base overflow-hidden animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
-          <div className="aspect-[2/1] relative bg-gradient-to-br from-muted to-secondary">
-            <div className="absolute inset-0 flex items-center justify-center">
-              <div className="text-center text-muted-foreground">
-                <svg className="mx-auto mb-2 opacity-40" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                  <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
-                  <circle cx="8.5" cy="8.5" r="1.5" />
-                  <polyline points="21 15 16 10 5 21" />
-                </svg>
-                <p className="text-caption-sm opacity-60">{t('home.streetPhoto')}</p>
-              </div>
-            </div>
+          <div className="aspect-[2/1] relative bg-muted">
+            <Image
+              src="/street/craft-street.jpg"
+              alt={t('home.craftStreetIntro')}
+              fill
+              sizes="(max-width: 448px) 100vw, 448px"
+              className="object-cover"
+            />
           </div>
           <div className="p-4">
             <div className="flex items-start justify-between gap-4">
@@ -267,7 +275,6 @@ export function HomeContent() {
                   src={shop.mascotImage}
                   alt={lang === 'en' ? shop.nameEn : shop.name}
                   collected={!!stamps[shop.id]?.isCollected}
-                  showBadge
                   sizes="100px"
                   className="w-[100px] h-[100px] mb-2"
                 />

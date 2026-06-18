@@ -139,8 +139,8 @@ export function HomeContent() {
 
       <div className="px-4 py-6 space-y-6">
         {/* 히어로 섹션 */}
-        <section className="relative overflow-hidden rounded-[20px] bg-gradient-to-br from-primary/8 via-secondary to-accent p-5 animate-fade-in-up">
-          <div className="flex items-start gap-4">
+        <section className="relative overflow-hidden rounded-[20px] bg-gradient-to-br from-primary/8 via-secondary to-accent px-5 py-7 animate-fade-in-up">
+          <div className="flex items-center gap-4">
             <div className="flex-1">
               <p className="text-badge text-primary mb-1">{t('home.suwonHaenggung')}</p>
               <h1 className="text-display-sm text-foreground mb-2 text-balance">
@@ -150,7 +150,7 @@ export function HomeContent() {
                 {t('home.stampTourDesc')}
               </p>
             </div>
-            <div className="w-28 h-28 animate-float flex-shrink-0">
+            <div className="w-28 h-28 flex-shrink-0">
               <Image
                 src="/mascots/jeongnyangi-face.png"
                 alt={lang === 'en' ? 'Craft Street Mascot' : '공방거리 마스코트'}

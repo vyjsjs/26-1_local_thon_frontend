@@ -2,7 +2,7 @@
 
 import Image from 'next/image'
 import { useI18n } from '@/lib/i18n'
-import { X, Search, Nfc, Check, Map } from 'lucide-react'
+import { X, Search, Nfc, Check, Map, HelpCircle } from 'lucide-react'
 
 interface GuideModalProps {
   open: boolean
@@ -36,7 +36,7 @@ export function GuideModal({ open, onClose }: GuideModalProps) {
         <div className="flex items-center gap-3 mb-5">
           <div className="w-16 h-16 flex-shrink-0">
             <Image
-              src="/mascots/main-mascot.png"
+              src="/mascots/jeongnyangi-full.png"
               alt=""
               width={64}
               height={64}
@@ -44,7 +44,10 @@ export function GuideModal({ open, onClose }: GuideModalProps) {
             />
           </div>
           <div>
-            <h2 className="text-display-sm text-foreground">{t('guide.title')}</h2>
+            <h2 className="text-display-sm text-foreground flex items-center gap-1.5">
+              {t('guide.title')}
+              <HelpCircle className="w-4 h-4 text-primary flex-shrink-0" />
+            </h2>
             <p className="text-body-sm text-muted-foreground">{t('guide.subtitle')}</p>
           </div>
         </div>

@@ -12,14 +12,17 @@ interface CharacterGalleryProps {
   collectedCount: number
   /** 상단 소개/통계 카드 표시 여부 */
   showIntro?: boolean
+  /** 미획득을 실루엣+물음표로 표시 (스탬프 페이지 전용) */
+  showQuestion?: boolean
   className?: string
 }
 
 /**
  * 공방 캐릭터(마스코트) 도감 — 13개 마스코트를 격자로 보여준다.
- * 획득 = 컬러, 미획득 = 회색 실루엣. /characters · /stamps(도감 탭) · /login(마이) 에서 공용.
+ * 획득 = 컬러. 미획득은 기본 무채색, `showQuestion`(스탬프 페이지)이면 회색 실루엣+물음표.
+ * /characters · /stamps(도감 탭) 에서 공용.
  */
-export function CharacterGallery({ stamps, collectedCount, showIntro = true, className }: CharacterGalleryProps) {
+export function CharacterGallery({ stamps, collectedCount, showIntro = true, showQuestion = false, className }: CharacterGalleryProps) {
   const { lang, t } = useI18n()
 
   return (
@@ -62,6 +65,7 @@ export function CharacterGallery({ stamps, collectedCount, showIntro = true, cla
                   src={shop.mascotImage}
                   alt={lang === 'en' ? shop.nameEn : shop.name}
                   collected={!!isCollected}
+                  showQuestion={showQuestion}
                   sizes="120px"
                   className={cn(
                     'w-full aspect-square transition-transform group-hover:scale-[1.03] group-active:scale-[0.98]',

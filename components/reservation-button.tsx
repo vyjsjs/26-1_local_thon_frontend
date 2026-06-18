@@ -29,7 +29,7 @@ export function ReservationButton({ shop, className }: ReservationButtonProps) {
   const fallback = naverSearch(`${shop.name} ${shop.address}`)
 
   const baseBtn =
-    'group relative flex items-center justify-center gap-2 h-12 px-5 rounded-[8px] text-body-md font-medium transition-all active:scale-98 overflow-hidden'
+    'group relative flex items-center justify-center gap-2 h-12 px-5 rounded-[16px] text-body-md font-medium transition-all active:scale-98 overflow-hidden'
   const shine = (
     <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent translate-x-[-200%] group-hover:translate-x-[200%] transition-transform duration-700" />
   )

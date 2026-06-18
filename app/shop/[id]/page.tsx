@@ -131,7 +131,7 @@ function ShopContent({ id }: { id: string }) {
           </div>
         </div>
 
-        <div className="relative z-10 -mt-10 rounded-t-[28px] bg-background px-4 pt-4 pb-6 space-y-5 shadow-[0_-12px_30px_-12px_rgba(0,0,0,0.18)]">
+        <div className="relative z-10 -mt-10 rounded-t-[36px] bg-background px-4 pt-5 pb-6 space-y-5 shadow-[0_-12px_30px_-12px_rgba(0,0,0,0.18)]">
           {/* 1. 마스코트 + 가게명 + 설명 (커버 위로 끌어올린 카드) */}
           <section className="-mt-16 relative animate-fade-in-up">
             <div className="flex items-end gap-4">
@@ -141,16 +141,15 @@ function ShopContent({ id }: { id: string }) {
                 collected={collected}
                 animate={justCollected}
                 priority
-                sizes="96px"
-                className="w-24 h-24 flex-shrink-0"
+                sizes="152px"
+                className="w-[150px] h-[150px] flex-shrink-0"
               />
-              <div className="flex-1 min-w-0 pb-1">
-                <span className={cn(
-                  'inline-flex items-center gap-1 px-2 py-0.5 rounded-[4px] text-badge mb-1.5',
-                  collected ? 'bg-primary/15 text-primary' : 'bg-muted text-muted-foreground'
-                )}>
-                  {collected ? (<><Sparkles className="w-3 h-3" />{t('shop.stampCollected')}</>) : t('common.notCollected')}
-                </span>
+              <div className="flex-1 min-w-0 pb-1.5">
+                {collected && (
+                  <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-[4px] text-badge mb-1.5 bg-primary/15 text-primary">
+                    <Sparkles className="w-3 h-3" />{t('shop.stampCollected')}
+                  </span>
+                )}
                 <h1 className="text-display-sm text-foreground leading-tight text-balance">{shopName}</h1>
                 <p className="text-badge text-muted-foreground mt-0.5">{shopCategory}</p>
               </div>
@@ -289,7 +288,7 @@ function ShopContent({ id }: { id: string }) {
       </div>
 
       {/* 하단 고정 버튼 */}
-      <div className="fixed bottom-16 left-0 right-0 z-40 glass border-t border-border">
+      <div className="fixed bottom-16 left-0 right-0 z-40 glass border-t border-border rounded-t-[24px]">
         <div className="max-w-md mx-auto px-4 py-4">
           <ReservationButton shop={shop} className="w-full" />
         </div>

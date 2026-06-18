@@ -261,7 +261,7 @@ function ShopContent({ id }: { id: string }) {
           {/* 7. 다른 공방 둘러보기 */}
           <section className="animate-fade-in-up" style={{ animationDelay: '0.35s' }}>
             <h3 className="text-title-md text-foreground mb-3">{t('shop.otherShops')}</h3>
-            <div className="flex gap-3 overflow-x-auto pb-2 -mx-4 px-4 hide-scrollbar">
+            <div className="flex gap-3 overflow-x-auto pt-4 pb-3 -mx-4 px-4 hide-scrollbar">
               {SHOPS.filter(s => s.id !== shop.id).slice(0, 6).map((otherShop) => {
                 const otherCollected = isCollected(otherShop.id)
                 return (

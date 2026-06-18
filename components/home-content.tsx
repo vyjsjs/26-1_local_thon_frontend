@@ -268,7 +268,7 @@ export function HomeContent() {
               {t('common.viewAll')}
             </Link>
           </div>
-          <div className="flex gap-3 overflow-x-auto pb-2 -mx-4 px-4 hide-scrollbar">
+          <div className="flex gap-3 overflow-x-auto pt-5 pb-3 -mx-4 px-4 hide-scrollbar">
             {SHOPS.slice(0, 6).map((shop) => (
               <Link
                 key={shop.id}

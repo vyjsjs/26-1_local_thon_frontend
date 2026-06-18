@@ -85,7 +85,7 @@ function StampsContent() {
 
           {/* 캐릭터 도감 (우선 노출) */}
           <TabsContent value="collection" className="mt-4 animate-fade-in-up">
-            <CharacterGallery stamps={stamps} collectedCount={collectedCount} showIntro={false} showQuestion />
+            <CharacterGallery stamps={stamps} collectedCount={collectedCount} showIntro={false} />
           </TabsContent>
 
           {/* 스탬프 목록 */}
@@ -128,7 +128,6 @@ function StampsContent() {
                       shop={shop}
                       isCollected={false}
                       showDetails
-                      showQuestion
                     />
                   ))}
                 </div>

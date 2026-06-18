@@ -13,8 +13,6 @@ interface TotemMapProps {
   stamps?: Record<string, { isCollected: boolean }>
   className?: string
   onTotemClick?: (shopId: string) => void
-  /** 미획득 마스코트에 물음표 실루엣 표시 (스탬프 페이지 전용) */
-  showQuestion?: boolean
 }
 
 // 실제 행궁동 공방거리 거리 디자인 기준 좌표 (SVG viewBox 360 x 480)
@@ -93,7 +91,7 @@ function ShopMarker({
   )
 }
 
-export function TotemMap({ stamps = {}, className, onTotemClick, showQuestion = false }: TotemMapProps) {
+export function TotemMap({ stamps = {}, className, onTotemClick }: TotemMapProps) {
   const router = useRouter()
   const { lang, t } = useI18n()
   const [hoveredId, setHoveredId] = useState<string | null>(null)
@@ -179,7 +177,6 @@ export function TotemMap({ stamps = {}, className, onTotemClick, showQuestion = 
                 src={selectedShop.mascotImage}
                 alt={lang === 'en' ? selectedShop.nameEn : selectedShop.name}
                 collected={!!stamps[selectedShop.id]?.isCollected}
-                showQuestion={showQuestion}
                 sizes="48px"
                 className="w-12 h-12 flex-shrink-0"
               />
@@ -231,11 +228,9 @@ export function TotemMap({ stamps = {}, className, onTotemClick, showQuestion = 
 interface TotemListMapProps {
   stamps?: Record<string, { isCollected: boolean }>
   className?: string
-  /** 미획득 마스코트에 물음표 실루엣 표시 (스탬프 페이지 전용) */
-  showQuestion?: boolean
 }
 
-export function TotemListMap({ stamps = {}, className, showQuestion = false }: TotemListMapProps) {
+export function TotemListMap({ stamps = {}, className }: TotemListMapProps) {
   const { lang, t } = useI18n()
 
   return (
@@ -263,7 +258,6 @@ export function TotemListMap({ stamps = {}, className, showQuestion = false }: T
               src={shop.mascotImage}
               alt={lang === 'en' ? shop.nameEn : shop.name}
               collected={isCollected}
-              showQuestion={showQuestion}
               sizes="40px"
               className="w-10 h-10 flex-shrink-0"
             />

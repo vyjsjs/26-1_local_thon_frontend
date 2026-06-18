@@ -101,12 +101,10 @@ interface StampCardProps {
   shop: Shop
   isCollected: boolean
   showDetails?: boolean
-  /** 미획득 시 물음표 실루엣 표시 (스탬프 페이지 전용) */
-  showQuestion?: boolean
   className?: string
 }
 
-export function StampCard({ shop, isCollected, showDetails = false, showQuestion = false, className }: StampCardProps) {
+export function StampCard({ shop, isCollected, showDetails = false, className }: StampCardProps) {
   const { lang, t } = useI18n()
 
   return (
@@ -124,7 +122,6 @@ export function StampCard({ shop, isCollected, showDetails = false, showQuestion
             src={shop.mascotImage}
             alt={lang === 'en' ? shop.nameEn : shop.name}
             collected={isCollected}
-            showQuestion={showQuestion}
             sizes="64px"
             className="w-16 h-16 flex-shrink-0"
           />

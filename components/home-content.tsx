@@ -276,6 +276,7 @@ export function HomeContent() {
                   src={shop.mascotImage}
                   alt={lang === 'en' ? shop.nameEn : shop.name}
                   collected={!!stamps[shop.id]?.isCollected}
+                  alwaysColor
                   sizes="100px"
                   className="w-[100px] h-[100px] mb-2"
                 />

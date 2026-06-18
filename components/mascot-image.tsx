@@ -7,11 +7,9 @@ import { Check } from 'lucide-react'
 interface MascotAuraProps {
   src: string
   alt: string
-  /** 획득 시 컬러 + 아우라, 미획득 시 회색 실루엣 (배경/박스 없음) */
+  /** 획득 시 컬러 + 아우라, 미획득 시 반투명 흑백 (배경/박스 없음) */
   collected?: boolean
-  /** 미획득 실루엣 위에 물음표(?) 표시 — 스탬프 페이지 전용 */
-  showQuestion?: boolean
-  /** 미획득이라도 항상 컬러 마스코트로 표시 (공방 상세 페이지 전용) */
+  /** 미획득이라도 항상 컬러로 표시 (공방 둘러보기/모든 캐릭터/상세 등 — 아우라는 획득 시에만) */
   alwaysColor?: boolean
   /** 획득 순간 통통 튀는 애니메이션 */
   animate?: boolean
@@ -24,16 +22,14 @@ interface MascotAuraProps {
 /**
  * 배경(박스) 없이 캐릭터만 보여준다.
  * - 획득: 원본 컬러 마스코트 + 부드러운 아우라 글로우.
- * - 미획득 + `showQuestion`(스탬프 페이지): 원본 마스코트의 **흑백(그레이스케일)**.
- * - 미획득 + 그 외 화면: 가게별 회색 실루엣(`/mascots/sil/*`).
- * - `alwaysColor`(공방 상세): 미획득이라도 컬러로 표시(아우라는 획득 시에만).
+ * - 미획득: 원본 마스코트의 **반투명 흑백(그레이스케일)** (실루엣/물음표 없음).
+ * - `alwaysColor`: 미획득이라도 컬러로 표시(아우라는 획득 시에만).
  * 빨간 체크 배지는 표시하지 않는다.
  */
 export function MascotAura({
   src,
   alt,
   collected = true,
-  showQuestion = false,
   alwaysColor = false,
   animate = false,
   priority = false,
@@ -41,10 +37,6 @@ export function MascotAura({
   className,
 }: MascotAuraProps) {
   const useColor = collected || alwaysColor
-  // 미획득: 스탬프 페이지(showQuestion)는 흑백 컬러마스코트+물음표, 그 외 화면은 회색 실루엣
-  const grayMascot = !useColor && showQuestion
-  const silhouette = !useColor && !showQuestion
-  const imgSrc = silhouette ? src.replace('/mascots/', '/mascots/sil/') : src
 
   return (
     <div
@@ -56,7 +48,7 @@ export function MascotAura({
       )}
     >
       <Image
-        src={imgSrc}
+        src={src}
         alt={alt}
         fill
         sizes={sizes}
@@ -65,7 +57,8 @@ export function MascotAura({
           'relative z-[1] object-contain transition-all duration-300',
           collected && 'drop-shadow-[0_4px_10px_rgba(0,0,0,0.14)]',
           collected && animate && 'animate-stamp-collect',
-          grayMascot && 'grayscale opacity-55',
+          // 미획득(컬러 강제 아님) → 반투명 흑백
+          !useColor && 'grayscale opacity-55',
         )}
       />
     </div>

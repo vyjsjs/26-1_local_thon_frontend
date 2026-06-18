@@ -42,7 +42,7 @@ export default function CharactersPage() {
       </header>
 
       <div className="px-4 py-6">
-        <CharacterGallery stamps={stamps} collectedCount={collectedCount} />
+        <CharacterGallery stamps={stamps} collectedCount={collectedCount} alwaysColor />
       </div>
 
       <BottomNav />

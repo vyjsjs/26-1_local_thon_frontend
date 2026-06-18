@@ -11,17 +11,17 @@ interface CharacterGalleryProps {
   collectedCount: number
   /** 상단 소개/통계 카드 표시 여부 */
   showIntro?: boolean
-  /** 미획득을 실루엣+물음표로 표시 (스탬프 페이지 전용) */
-  showQuestion?: boolean
+  /** 미획득이라도 항상 컬러로 표시 (모든 캐릭터 페이지 전용 — 아우라는 획득 시에만) */
+  alwaysColor?: boolean
   className?: string
 }
 
 /**
  * 공방 캐릭터(마스코트) 도감 — 13개 마스코트를 격자로 보여준다.
- * 획득 = 컬러. 미획득은 기본 무채색, `showQuestion`(스탬프 페이지)이면 회색 실루엣+물음표.
+ * 획득 = 컬러+아우라. 미획득: `alwaysColor`면 컬러(아우라X), 그 외 반투명 흑백.
  * /characters · /stamps(도감 탭) 에서 공용.
  */
-export function CharacterGallery({ stamps, collectedCount, showIntro = true, showQuestion = false, className }: CharacterGalleryProps) {
+export function CharacterGallery({ stamps, collectedCount, showIntro = true, alwaysColor = false, className }: CharacterGalleryProps) {
   const { lang, t } = useI18n()
 
   return (
@@ -60,7 +60,7 @@ export function CharacterGallery({ stamps, collectedCount, showIntro = true, sho
                   src={shop.mascotImage}
                   alt={lang === 'en' ? shop.nameEn : shop.name}
                   collected={!!isCollected}
-                  showQuestion={showQuestion}
+                  alwaysColor={alwaysColor}
                   sizes="120px"
                   className={cn(
                     'w-full aspect-square transition-transform group-hover:scale-[1.03] group-active:scale-[0.98]',

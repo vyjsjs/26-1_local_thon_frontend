@@ -271,6 +271,7 @@ function ShopContent({ id }: { id: string }) {
                       src={otherShop.mascotImage}
                       alt={lang === 'en' ? otherShop.nameEn : otherShop.name}
                       collected={otherCollected}
+                      alwaysColor
                       sizes="80px"
                       className="w-20 h-20 mx-auto mb-2"
                     />

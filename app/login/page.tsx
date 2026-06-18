@@ -7,13 +7,12 @@ import { useI18n } from '@/lib/i18n'
 import { getUserId } from '@/lib/data'
 import { Button } from '@/components/ui/button'
 import { LanguageToggle } from '@/components/language-toggle'
-import { CharacterGallery } from '@/components/character-gallery'
 import { ArrowLeft, User, Stamp, LogOut, Check, Sparkles } from 'lucide-react'
 import Link from 'next/link'
 
 export default function LoginPage() {
   const router = useRouter()
-  const { stamps, collectedCount, totalCount } = useStamps()
+  const { collectedCount, totalCount } = useStamps()
   const { t } = useI18n()
   const [userId, setUserId] = useState<string | null>(null)
   const [isLoggedIn, setIsLoggedIn] = useState(false)
@@ -62,7 +61,7 @@ export default function LoginPage() {
         </div>
       </header>
 
-      <div className="px-6 py-8 pb-24 space-y-8">
+      <div className="px-6 py-8">
         {/* 성공 메시지 */}
         {showSuccess && (
           <div className="fixed inset-0 z-50 flex items-center justify-center bg-foreground/20 backdrop-blur-sm">
@@ -74,9 +73,6 @@ export default function LoginPage() {
             </div>
           </div>
         )}
-
-        {/* 캐릭터 도감 (우선 노출) */}
-        <CharacterGallery stamps={stamps} collectedCount={collectedCount} />
 
         {isLoggedIn ? (
           /* 로그인된 상태 */
@@ -128,6 +124,14 @@ export default function LoginPage() {
             >
               <LogOut className="w-4 h-4 mr-2" />
               {t('login.logout')}
+            </Button>
+
+            {/* 스탬프 페이지로 이동 */}
+            <Button
+              asChild
+              className="w-full h-12 text-body-md font-medium rounded-[8px]"
+            >
+              <Link href="/stamps">{t('stampSuccess.viewMyStamps')}</Link>
             </Button>
           </div>
         ) : (

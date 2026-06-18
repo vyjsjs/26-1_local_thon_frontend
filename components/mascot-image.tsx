@@ -11,6 +11,8 @@ interface MascotAuraProps {
   collected?: boolean
   /** 미획득 실루엣 위에 물음표(?) 표시 — 스탬프 페이지 전용 */
   showQuestion?: boolean
+  /** 미획득이라도 항상 컬러 마스코트로 표시 (공방 상세 페이지 전용) */
+  alwaysColor?: boolean
   /** 획득 순간 통통 튀는 애니메이션 */
   animate?: boolean
   priority?: boolean
@@ -22,8 +24,8 @@ interface MascotAuraProps {
 /**
  * 배경(박스) 없이 캐릭터만 보여준다.
  * - 획득: 원본 컬러 마스코트 + 부드러운 아우라 글로우.
- * - 미획득 + `showQuestion`(스탬프 페이지): 가게별 회색 실루엣(`/mascots/sil/*`) + 물음표.
- * - 미획득 + 그 외 화면: 원본 마스코트의 무채색(그레이스케일) 버전.
+ * - 미획득: 가게별 회색 실루엣(`/mascots/sil/*`). `showQuestion`(스탬프 페이지)이면 실루엣 위 물음표.
+ * - `alwaysColor`(공방 상세): 미획득이라도 컬러로 표시(아우라는 획득 시에만).
  * 빨간 체크 배지는 표시하지 않는다.
  */
 export function MascotAura({
@@ -31,14 +33,16 @@ export function MascotAura({
   alt,
   collected = true,
   showQuestion = false,
+  alwaysColor = false,
   animate = false,
   priority = false,
   sizes = '128px',
   className,
 }: MascotAuraProps) {
-  // 스탬프 페이지(미획득)에서만 가게별 실루엣 이미지 사용 (/mascots/foo.png → /mascots/sil/foo.png)
-  const useSilhouette = !collected && showQuestion
-  const imgSrc = useSilhouette ? src.replace('/mascots/', '/mascots/sil/') : src
+  // 미획득은 가게별 실루엣 사용(/mascots/foo.png → /mascots/sil/foo.png). alwaysColor면 컬러 유지.
+  const useColor = collected || alwaysColor
+  const imgSrc = useColor ? src : src.replace('/mascots/', '/mascots/sil/')
+  const showQ = !useColor && showQuestion
 
   return (
     <div
@@ -59,11 +63,9 @@ export function MascotAura({
           'relative z-[1] object-contain transition-all duration-300',
           collected && 'drop-shadow-[0_4px_10px_rgba(0,0,0,0.14)]',
           collected && animate && 'animate-stamp-collect',
-          // 실루엣이 아닌 미획득 화면 → 무채색 마스코트
-          !collected && !useSilhouette && 'grayscale opacity-45',
         )}
       />
-      {useSilhouette && (
+      {showQ && (
         <svg
           viewBox="0 0 24 24"
           aria-hidden

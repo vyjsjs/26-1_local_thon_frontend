@@ -139,6 +139,7 @@ function ShopContent({ id }: { id: string }) {
                 src={shop.mascotImage}
                 alt={`${shopName} ${lang === 'en' ? 'mascot' : '마스코트'}`}
                 collected={collected}
+                alwaysColor
                 animate={justCollected}
                 priority
                 sizes="152px"

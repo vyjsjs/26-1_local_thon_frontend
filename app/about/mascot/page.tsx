@@ -3,16 +3,14 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
-import { SHOPS } from '@/lib/data'
 import { useI18n } from '@/lib/i18n'
 import { Button } from '@/components/ui/button'
 import { LanguageToggle } from '@/components/language-toggle'
-import { MascotAura } from '@/components/mascot-image'
 import { ChevronLeft, Sparkles, Box } from 'lucide-react'
 
 export default function MascotPage() {
   const router = useRouter()
-  const { lang, t } = useI18n()
+  const { t } = useI18n()
 
   return (
     <div className="min-h-screen pb-4">
@@ -79,50 +77,8 @@ export default function MascotPage() {
           </div>
         </section>
 
-        {/* 마스코트 그리드 */}
-        <section className="animate-fade-in-up" style={{ animationDelay: '0.15s' }}>
-          <div className="flex items-center justify-between mb-4">
-            <h3 className="font-semibold text-foreground flex items-center gap-2">
-              <Sparkles className="w-4 h-4 text-primary" />
-              {t('mascot.byShop')}
-            </h3>
-            <Link 
-              href="/characters" 
-              className="text-sm text-primary hover:text-primary/80 transition-colors"
-            >
-              {t('common.viewAll')}
-            </Link>
-          </div>
-          <div className="grid grid-cols-2 gap-3">
-            {SHOPS.map((shop, index) => (
-              <Link
-                key={shop.id}
-                href={`/shop/${shop.id}`}
-                className="bg-card rounded-xl p-4 border border-border card-interactive animate-fade-in-up"
-                style={{ animationDelay: `${0.2 + index * 0.03}s` }}
-              >
-                <MascotAura
-                  src={shop.mascotImage}
-                  alt={lang === 'en' ? shop.nameEn : shop.name}
-                  collected
-                  sizes="64px"
-                  className="w-16 h-16 mx-auto mb-3"
-                />
-                <div className="text-center">
-                  <h4 className="font-semibold text-sm text-foreground mb-0.5">
-                    {lang === 'en' ? shop.nameEn : shop.name}
-                  </h4>
-                  <p className="text-[10px] text-muted-foreground line-clamp-2 leading-relaxed">
-                    {lang === 'en' ? shop.mascotDescriptionEn : shop.mascotDescription}
-                  </p>
-                </div>
-              </Link>
-            ))}
-          </div>
-        </section>
-
         {/* 디자이너 크레딧 */}
-        <section className="bg-secondary/50 rounded-xl p-4 text-center animate-fade-in-up" style={{ animationDelay: '0.4s' }}>
+        <section className="bg-secondary/50 rounded-xl p-4 text-center animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
           <p className="text-xs text-muted-foreground">
             {t('mascot.designCredit')}
           </p>

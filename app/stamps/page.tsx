@@ -4,11 +4,11 @@ import { Suspense } from 'react'
 import { useStamps } from '@/hooks/use-stamps'
 import { useI18n } from '@/lib/i18n'
 import { StampProgress, StampCard } from '@/components/stamp-grid'
-import { TotemMap, TotemListMap } from '@/components/totem-map'
+import { CharacterGallery } from '@/components/character-gallery'
 import { LanguageToggle } from '@/components/language-toggle'
 import { SHOPS } from '@/lib/data'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { Grid3X3, MapPin, Trophy, Info } from 'lucide-react'
+import { Grid3X3, Sparkles, Trophy, Info } from 'lucide-react'
 
 function StampsContent() {
   const { stamps, collectedCount, totalCount, isLoading } = useStamps()
@@ -64,26 +64,32 @@ function StampsContent() {
           </p>
         </section>
 
-        {/* 탭 */}
-        <Tabs defaultValue="grid" className="w-full">
+        {/* 탭 — 캐릭터 도감(기본) / 스탬프 목록 */}
+        <Tabs defaultValue="collection" className="w-full">
           <TabsList className="w-full h-11 p-1 bg-secondary rounded-[8px]">
-            <TabsTrigger 
-              value="grid" 
+            <TabsTrigger
+              value="collection"
+              className="flex-1 h-full rounded-[4px] data-[state=active]:bg-card data-[state=active]:shadow-sm gap-1.5 text-caption"
+            >
+              <Sparkles className="w-4 h-4" />
+              <span>{t('gallery.title')}</span>
+            </TabsTrigger>
+            <TabsTrigger
+              value="list"
               className="flex-1 h-full rounded-[4px] data-[state=active]:bg-card data-[state=active]:shadow-sm gap-1.5 text-caption"
             >
               <Grid3X3 className="w-4 h-4" />
               <span>{t('stamps.grid')}</span>
             </TabsTrigger>
-            <TabsTrigger 
-              value="map" 
-              className="flex-1 h-full rounded-[4px] data-[state=active]:bg-card data-[state=active]:shadow-sm gap-1.5 text-caption"
-            >
-              <MapPin className="w-4 h-4" />
-              <span>{t('stamps.map')}</span>
-            </TabsTrigger>
           </TabsList>
-          
-          <TabsContent value="grid" className="mt-4 space-y-4 animate-fade-in-up">
+
+          {/* 캐릭터 도감 (우선 노출) */}
+          <TabsContent value="collection" className="mt-4 animate-fade-in-up">
+            <CharacterGallery stamps={stamps} collectedCount={collectedCount} showIntro={false} />
+          </TabsContent>
+
+          {/* 스탬프 목록 */}
+          <TabsContent value="list" className="mt-4 space-y-4 animate-fade-in-up">
             {/* 수집 완료 */}
             {collectedCount > 0 && (
               <div>
@@ -95,9 +101,9 @@ function StampsContent() {
                 </div>
                 <div className="space-y-2">
                   {SHOPS.filter(shop => stamps[shop.id]?.isCollected).map((shop) => (
-                    <StampCard 
-                      key={shop.id} 
-                      shop={shop} 
+                    <StampCard
+                      key={shop.id}
+                      shop={shop}
                       isCollected={true}
                       showDetails
                     />
@@ -128,19 +134,6 @@ function StampsContent() {
                 </div>
               </div>
             )}
-          </TabsContent>
-          
-          <TabsContent value="map" className="mt-4 animate-fade-in-up">
-            <section className="card-base overflow-hidden shadow-sm">
-              <TotemMap stamps={stamps} showQuestion />
-            </section>
-            <section className="mt-4">
-              <h3 className="text-caption mb-3 text-foreground flex items-center gap-2">
-                <MapPin className="w-4 h-4 text-muted-foreground" />
-                {t('stamps.shopList')}
-              </h3>
-              <TotemListMap stamps={stamps} showQuestion />
-            </section>
           </TabsContent>
         </Tabs>
 

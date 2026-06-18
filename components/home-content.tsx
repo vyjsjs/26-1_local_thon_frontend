@@ -19,14 +19,18 @@ export function HomeContent() {
   const { stamps, collect, collectedCount, totalCount, isLoading } = useStamps()
   const { lang, t } = useI18n()
 
-  // 홈 미리보기: 마스코트가 겹치지 않게 고유 마스코트 우선으로 8개 (최대한 다양한 실루엣 노출)
+  // 홈 미리보기(8개): 획득한 스탬프를 먼저, 그 다음 미획득은 마스코트가 겹치지 않게 다양하게 채움
   const previewShops = (() => {
+    const collected = SHOPS.filter((s) => stamps[s.id]?.isCollected)
     const seen = new Set<string>()
-    return SHOPS.filter((s) => {
-      if (seen.has(s.mascotImage)) return false
-      seen.add(s.mascotImage)
-      return true
-    }).slice(0, 8)
+    const uncollectedVaried = SHOPS
+      .filter((s) => !stamps[s.id]?.isCollected)
+      .filter((s) => {
+        if (seen.has(s.mascotImage)) return false
+        seen.add(s.mascotImage)
+        return true
+      })
+    return [...collected, ...uncollectedVaried].slice(0, 8)
   })()
   const [demoTapCount, setDemoTapCount] = useState(0)
   const [showDemoButton, setShowDemoButton] = useState(false)

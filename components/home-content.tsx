@@ -139,28 +139,25 @@ export function HomeContent() {
 
       <div className="px-4 py-6 space-y-6">
         {/* 히어로 섹션 */}
-        <section className="relative overflow-hidden rounded-[20px] bg-gradient-to-br from-primary/8 via-secondary to-accent px-5 py-7 animate-fade-in-up">
-          <div className="flex items-center gap-4">
-            <div className="flex-1">
-              <p className="text-badge text-primary mb-1">{t('home.suwonHaenggung')}</p>
-              <h1 className="text-display-sm text-foreground mb-2 text-balance">
-                {t('home.stampTour')}
-              </h1>
-              <p className="text-body-sm text-muted-foreground leading-relaxed whitespace-pre-line">
-                {t('home.stampTourDesc')}
-              </p>
-            </div>
-            <div className="w-28 h-28 flex-shrink-0">
-              <Image
-                src="/mascots/jeongnyangi-face.png"
-                alt={lang === 'en' ? 'Craft Street Mascot' : '공방거리 마스코트'}
-                width={112}
-                height={112}
-                className="w-full h-full object-contain drop-shadow-xl"
-                priority
-              />
-            </div>
+        <section className="relative overflow-hidden rounded-[20px] bg-gradient-to-br from-primary/8 via-secondary to-accent px-5 min-h-[190px] flex items-center animate-fade-in-up">
+          <div className="relative z-10 w-[60%] py-7">
+            <p className="text-badge text-primary mb-1">{t('home.suwonHaenggung')}</p>
+            <h1 className="text-display-sm text-foreground mb-2 text-balance">
+              {t('home.stampTour')}
+            </h1>
+            <p className="text-body-sm text-muted-foreground leading-relaxed whitespace-pre-line">
+              {t('home.stampTourDesc')}
+            </p>
           </div>
+          {/* 마스코트 — 박스 하단에 절단면 맞춰 크게 배치 (넘치는 부분은 overflow-hidden로 클리핑) */}
+          <Image
+            src="/mascots/jeongnyangi-face.png"
+            alt={lang === 'en' ? 'Craft Street Mascot' : '공방거리 마스코트'}
+            width={260}
+            height={260}
+            priority
+            className="absolute bottom-0 right-0 w-[185px] h-auto object-contain drop-shadow-xl pointer-events-none select-none"
+          />
           <div className="absolute -bottom-4 -right-4 w-24 h-24 rounded-full bg-primary/5 blur-2xl" />
         </section>
 

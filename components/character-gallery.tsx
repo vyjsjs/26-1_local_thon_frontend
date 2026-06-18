@@ -5,7 +5,6 @@ import { cn } from '@/lib/utils'
 import { useI18n } from '@/lib/i18n'
 import { SHOPS } from '@/lib/data'
 import { MascotAura } from '@/components/mascot-image'
-import { Check } from 'lucide-react'
 
 interface CharacterGalleryProps {
   stamps: Record<string, { isCollected: boolean }>
@@ -40,10 +39,6 @@ export function CharacterGallery({ stamps, collectedCount, showIntro = true, sho
                 <span className="text-badge text-foreground">
                   {[t('gallery.totalCharactersPrefix'), SHOPS.length, t('gallery.totalCharactersSuffix')].filter(Boolean).join(' ')}
                 </span>
-              </div>
-              <div className="flex items-center gap-2 px-3 py-1.5 bg-card rounded-full border border-border">
-                <Check className="w-3 h-3 text-success" />
-                <span className="text-badge text-foreground">{collectedCount}{t('gallery.collected')}</span>
               </div>
             </div>
           </div>

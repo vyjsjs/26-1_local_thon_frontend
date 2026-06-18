@@ -24,7 +24,7 @@ interface MascotAuraProps {
 /**
  * 배경(박스) 없이 캐릭터만 보여준다.
  * - 획득: 원본 컬러 마스코트 + 부드러운 아우라 글로우.
- * - 미획득 + `showQuestion`(스탬프 페이지): 원본 마스코트의 **흑백(그레이스케일)** + 물음표.
+ * - 미획득 + `showQuestion`(스탬프 페이지): 원본 마스코트의 **흑백(그레이스케일)**.
  * - 미획득 + 그 외 화면: 가게별 회색 실루엣(`/mascots/sil/*`).
  * - `alwaysColor`(공방 상세): 미획득이라도 컬러로 표시(아우라는 획득 시에만).
  * 빨간 체크 배지는 표시하지 않는다.
@@ -68,24 +68,6 @@ export function MascotAura({
           grayMascot && 'grayscale opacity-55',
         )}
       />
-      {grayMascot && (
-        <svg
-          viewBox="0 0 24 24"
-          aria-hidden
-          className="absolute z-[2] left-[29%] top-[27%] w-[42%] h-[42%] pointer-events-none"
-        >
-          <text
-            x="12"
-            y="19"
-            textAnchor="middle"
-            fontSize="22"
-            fontWeight="800"
-            fill="#8e949b"
-          >
-            ?
-          </text>
-        </svg>
-      )}
     </div>
   )
 }

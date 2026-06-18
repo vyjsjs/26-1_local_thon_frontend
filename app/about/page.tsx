@@ -53,12 +53,12 @@ export default function AboutPage() {
         <Link href="/about/mascot">
           <section className="bg-gradient-to-br from-primary/8 via-accent to-secondary rounded-[14px] p-5 animate-fade-in-up card-interactive" style={{ animationDelay: '0.15s' }}>
             <div className="flex items-center gap-4">
-              <div className="w-16 h-16 flex-shrink-0">
+              <div className="w-24 h-24 flex-shrink-0">
                 <Image
                   src="/mascots/jeongnyangi-face.png"
                   alt={t('about.mascotTitle')}
-                  width={64}
-                  height={64}
+                  width={96}
+                  height={96}
                   className="w-full h-full object-contain drop-shadow-md"
                 />
               </div>
